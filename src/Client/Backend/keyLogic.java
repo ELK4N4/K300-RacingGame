@@ -108,11 +108,7 @@ public class keyLogic implements Runnable {
     private void calcXY(int n) {
         double tx = n;
         double ty = getY(tx + x);
-
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
-
-
-
         x =  (x + (4 / td) * n);
         y = y - (4 / td) *  (y - ty);
     }
