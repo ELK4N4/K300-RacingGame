@@ -32,6 +32,7 @@ public class keyLogic implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("hello");
         while (true) {
             myMove();
             main.repaint();
@@ -45,6 +46,7 @@ public class keyLogic implements Runnable {
     }
 
     private void myMove() {
+
         if(up) {
             if(right) {
                 changeDirection(x, y, false);
@@ -107,7 +109,7 @@ public class keyLogic implements Runnable {
         */
 
     }
-    //todo fill them
+
     public  double getDirection()
     {
         return direction;
