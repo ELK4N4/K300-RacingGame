@@ -16,7 +16,7 @@ public class Main {
         ServerSocket serverSocket;
         Socket clientSocket;
         OutputStream outputStream;
-        InputStream inputStream;
+        InputStream inputStream; 
         ObjectOutputStream objectOutputStream;
         ObjectInputStream objectInputStream;
         clientList = new ArrayList<>();
