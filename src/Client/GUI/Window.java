@@ -1,8 +1,6 @@
 package Client.GUI;
 
-import Client.Backend.keyLogic;
 import Client.Main;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +16,9 @@ public class Window extends JPanel {
     private BufferedImage blueCar;
     private BufferedImage redCar;
     private BufferedImage background;
-    static double angle = 0;
+    private boolean redIsPlayer;
+    static double blueAngle = 0;
+    static double redAngle = 0;
     static double blueCarX = SCREEN_WIDTH / 2.0;
     static double blueCarY = SCREEN_HEIGHT / 2.0;
     static double redCarX = SCREEN_WIDTH / 2.0;
@@ -49,8 +49,29 @@ public class Window extends JPanel {
 
     }
 
+    public void setPlayerX(double x){
+        if(redIsPlayer){
+            redCarX = x;
+        } else {
+            blueCarX = x;
+        }
+    }
+    public void setPlayerY(double y){
+        if(redIsPlayer){
+            redCarY =y;
+        } else {
+                blueCarY =y;
+            }
+    }public  void setAngle(double angle)
+    {
+     if(redIsPlayer)
+     {
+         redAngle = angle;
+     } else {
+         blueAngle = angle;
+     }
 
-
+    }
 
 
     private BufferedImage getImage(String imageName) {
@@ -68,10 +89,8 @@ public class Window extends JPanel {
         g.setFont(new Font("arial", 1, 50));
         g.setColor(Color.red);
 
-        g.drawString(angle + "", 70, 50);
-
-        atBlueCar.rotate(Math.toDegrees(angle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
-        atRedCar.rotate(Math.toDegrees(angle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
+        atBlueCar.rotate(Math.toDegrees(blueAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
+        atRedCar.rotate(Math.toDegrees(redAngle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
 
         Graphics2D graphics2D = (Graphics2D) g;
         g.drawImage(background, 0, 0, this);
