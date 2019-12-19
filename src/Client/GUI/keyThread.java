@@ -29,21 +29,21 @@ public class keyThread implements Runnable {
 
     private void carMove() {
         if(up) {
-            Window.Ycar += 1;
+            Window.blueCarY += 1;
             if(right) {
-                Window.Xcar += 1;
+                Window.blueCarX += 1;
             }
             if(left) {
-                Window.Xcar -= 1;
+                Window.blueCarX -= 1;
             }
         }
         if(down) {
-            Window.Ycar -= 1;
+            Window.blueCarX -= 1;
             if(right) {
-                Window.Xcar += 1;
+                Window.blueCarX += 1;
             }
             if(left) {
-                Window.Xcar -= 1;
+                Window.blueCarX -= 1;
             }
         }
 
