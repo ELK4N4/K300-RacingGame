@@ -3,39 +3,35 @@ package Client.GUI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Window extends JPanel implements KeyListener {
+public class Window extends JPanel {
     private static final int SCREEN_HEIGHT = 1080;
     private static final int SCREEN_WIDTH = 1920;
     private static JFrame frame;
     private BufferedImage blueCar;
     private BufferedImage redCar;
     private BufferedImage background;
-    private keyThread keyThread;
     static double angle = 0;
     static double blueCarX = SCREEN_WIDTH / 2.0;
     static double blueCarY = SCREEN_HEIGHT / 2.0;
     static double redCarX = SCREEN_WIDTH / 2.0;
     static double redCarY = SCREEN_HEIGHT / 2.0;
 
-    public Window(){
+    public Window(KeyListener keyListener){
         frame = new JFrame();
-        keyThread = new keyThread(this);
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
         background = getImage("Images/Track.jpg");
         this.setBackground(Color.blue);
-        frame.addKeyListener(this);
-        new Thread(keyThread).start();
         blueCarX = redCar.getWidth() / 2.0;
         blueCarY -= redCar.getHeight() / 2.0;
         redCarX -= redCar.getWidth() / 2.0;
         redCarY -= redCar.getHeight() / 2.0;
+        frame.addKeyListener(keyListener);
 
 
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -78,45 +74,4 @@ public class Window extends JPanel implements KeyListener {
         graphics2D.drawImage(redCar, atRedCar, null);
     }
 
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("right");
-            keyThread.setRight(true);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyThread.setLeft(true);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyThread.setUp(true);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyThread.setDown(true);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            keyThread.setRight(false);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyThread.setLeft(false);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyThread.setUp(false);
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyThread.setDown(false);
-        }
-    }
 }

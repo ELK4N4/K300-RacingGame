@@ -1,16 +1,6 @@
 package Client.Backend;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.*;
-import java.io.IOException;
 
-package Testing;
-
-public class ClickThread implements Runnable {
+public class keyLogic implements Runnable {
 
     private double x;
     private double y;
@@ -18,11 +8,10 @@ public class ClickThread implements Runnable {
     private double Cy;
     private double direction;
     private boolean up, down, right, left;
-    Test2 frame;
 
-    public ClickThread() {
-        x =
-        y =
+    public keyLogic(double x, double y) {
+        this.x = x;
+        this.y = y;
         Cx = x;
         Cy = y;
         up = false;
@@ -112,18 +101,14 @@ public class ClickThread implements Runnable {
     private double getY(double x) {
         double y;
         y = Math.tan(Math.toDegrees(direction)) * (x - Cx) ;
-        y = y + Test2.Cy;
+        y = y + Cy;
         return y;
     }
 
     private void calcXY(int n) {
         double tx = n;
         double ty = getY(tx + x);
-
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
-
-
-
         x =  (x + (4 / td) * n);
         y = y - (4 / td) *  (y - ty);
     }
