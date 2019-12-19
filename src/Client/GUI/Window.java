@@ -15,7 +15,6 @@ public class Window extends JPanel {
     private BufferedImage blueCar;
     private BufferedImage redCar;
     private BufferedImage background;
-    private keyThread keyThread;
     static double angle = 0;
     static double blueCarX = SCREEN_WIDTH / 2.0;
     static double blueCarY = SCREEN_HEIGHT / 2.0;
@@ -24,12 +23,10 @@ public class Window extends JPanel {
 
     public Window(KeyListener keyListener){
         frame = new JFrame();
-        keyThread = new keyThread(this);
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
         background = getImage("Images/Track.jpg");
         this.setBackground(Color.blue);
-        new Thread(keyThread).start();
         blueCarX = redCar.getWidth() / 2.0;
         blueCarY -= redCar.getHeight() / 2.0;
         redCarX -= redCar.getWidth() / 2.0;
