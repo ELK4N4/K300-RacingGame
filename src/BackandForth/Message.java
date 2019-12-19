@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     public static final int PORT = 9090;
-    public static final String IP = "127.0.0.1";
+    public static final String IP = "198.168.1.38";
     public double x;
     public double y;
     public double direction;
