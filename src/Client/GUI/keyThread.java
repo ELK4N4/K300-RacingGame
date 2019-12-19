@@ -16,7 +16,7 @@ public class keyThread implements Runnable {
     @Override
     public void run() {
         while (true) {
-            myMove();
+            carMove();
             frame.repaint();
             try {
                 Thread.sleep(10);
@@ -27,49 +27,27 @@ public class keyThread implements Runnable {
         }
     }
 
-    private void myMove() {
+    private void carMove() {
         if(up) {
             Window.Ycar += 1;
+            if(right) {
+                Window.Xcar += 1;
+            }
+            if(left) {
+                Window.Xcar -= 1;
+            }
         }
         if(down) {
             Window.Ycar -= 1;
-        }
-        if(left) {
-            Window.Xcar -= 1;
-        }
-        if(right) {
-            Window.Xcar += 1;
+            if(right) {
+                Window.Xcar += 1;
+            }
+            if(left) {
+                Window.Xcar -= 1;
+            }
         }
 
 
-        /*
-       if(up) {
-            if(Test2.direction >= -0.0276 && Test2.direction <= 0.0276) {
-                Test2.x += 3;
-            } else if(Test2.direction >= 0.0276 && Test2.direction <= 0.0822) {
-                Test2.x -= 3;
-            }
-            Test2.y = getY(Test2.x);
-            up = false;
-        }
-        if(down) {
-            if(Test2.direction >= -0.0276 && Test2.direction <= 0.0276) {
-                Test2.x -= 3;
-            } else if(Test2.direction >= 0.0276 && Test2.direction <= 0.0822) {
-                Test2.x += 3;
-            }
-            Test2.y = getY(Test2.x);
-            down = false;
-        }
-        if(right) {
-            changeDirection(Test2.x, Test2.y, false);
-            right = false;
-        }
-        if(left) {
-            changeDirection(Test2.x, Test2.y, true);
-            left = false;
-        }
-        */
 
     }
 
