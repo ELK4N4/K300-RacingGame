@@ -20,18 +20,22 @@ public class KeyInput implements KeyListener {
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP){
 
+            thread.setUp(true);
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN){
 
+            thread.setDown(true);
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT){
 
+            thread.setRight(true);
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT){
 
+            thread.setLeft(true);
         }
 
     }
@@ -45,17 +49,24 @@ public class KeyInput implements KeyListener {
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP){
 
+            thread.setUp(flase);
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN){
+
+            thread.setDown(flase);
 
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT){
 
+            thread.setRight(flase);
+
         }
 
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT){
+
+            thread.setLeft(flase);
 
         }
     }
