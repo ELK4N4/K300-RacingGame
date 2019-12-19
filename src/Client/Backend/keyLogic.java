@@ -65,10 +65,10 @@ public class keyLogic implements Runnable {
         }
         if(down) {
             if(right) {
-                changeDirection(x, y, false);
+                changeDirection(x, y, true);
             }
             if(left) {
-                changeDirection(x, y, true);
+                changeDirection(x, y, false);
             }
 
             if(direction >= -0.0276 && direction <= 0.0276) {
@@ -124,8 +124,8 @@ public class keyLogic implements Runnable {
     }
     private double getY(double x) {
         double y;
-        y = Math.tan(Math.toDegrees(direction)) * (x - Cx) ;
-        y = y + Cy;
+        y = Math.tan(Math.toDegrees(direction)) * (x - this.x) ;
+        y = y + this.y;
         return y;
     }
 
@@ -143,10 +143,8 @@ public class keyLogic implements Runnable {
 
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
 
-
-
         x =  (x - (4 / td) * n);
-        y = y - (4 / td) *  (y - ty);
+        y = y + (4 / td) *  (y - ty);
     }
 
     private void changeDirection(double x, double y, boolean left) {

@@ -19,13 +19,23 @@ public class Main {
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
         new Thread(keyLogic).start();
-        Socket socket;
-        ObjectInputStream inputStream;
-        ObjectOutputStream outputStream;
-        socket = new Socket(Message.IP,Message.PORT);
-        inputStream = new ObjectInputStream(socket.getInputStream());
-        outputStream = new ObjectOutputStream(socket.getOutputStream());
-        new Thread(new BackAndForth(this, keyLogic, outputStream, inputStream)).start();
+//        Socket socket;
+//        ObjectInputStream inputStream;
+//        ObjectOutputStream outputStream;
+//        socket = new Socket(Message.IP,Message.PORT);
+//        inputStream = new ObjectInputStream(socket.getInputStream());
+//        outputStream = new ObjectOutputStream(socket.getOutputStream());
+//        new Thread(new BackAndForth(this, keyLogic, outputStream, inputStream)).start();
+        run();
+    }
+
+    private void run() {
+        while (true) {
+            setX(keyLogic.getX());
+            System.out.println("enterd");
+            setY(keyLogic.getY());
+            setDirection(keyLogic.getDirection());
+        }
     }
 
     public static void main(String[] args) throws IOException {
