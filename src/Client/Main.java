@@ -4,7 +4,6 @@ import BackandForth.Message;
 import Client.Backend.KeyInput;
 import Client.Backend.keyLogic;
 import Client.GUI.Window;
-import Server.thread;
 
 
 import java.awt.event.KeyListener;
