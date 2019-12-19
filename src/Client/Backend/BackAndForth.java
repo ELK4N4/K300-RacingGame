@@ -20,6 +20,15 @@ public class BackAndForth implements  Runnable{
 
     @Override
     public void run() {
-
+        while (true){
+            main.setX(keyLogic.getX());
+            main.setY(keyLogic.getY());
+            main.setDirection(keyLogic.getDirection());
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

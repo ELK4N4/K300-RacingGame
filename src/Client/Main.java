@@ -45,4 +45,16 @@ public class Main {
     public void repaint() {
         window.repaint();
     }
+
+    public void setX(double x) {
+        window.setPlayerX(x);
+    }
+
+    public void setY(double y) {
+        window.setPlayerY(y);
+    }
+
+    public void setDirection(double direction) {
+        window.setAngle(direction);
+    }
 }
