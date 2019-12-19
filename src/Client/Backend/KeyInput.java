@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
 
-    private keyLogic keyThread;
+    private keyLogic keyLogic;
 
-    public KeyInput(keyLogic keyThread) {
-        this.keyThread = keyThread;
+    public KeyInput(keyLogic keyLogic) {
+        this.keyLogic = keyLogic;
     }
 
     @Override
@@ -22,32 +22,32 @@ public class KeyInput implements KeyListener {
             System.exit(0);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            keyThread.setRight(true);
+            keyLogic.setRight(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyThread.setLeft(true);
+            keyLogic.setLeft(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyThread.setUp(true);
+            keyLogic.setUp(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyThread.setDown(true);
+            keyLogic.setDown(true);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            keyThread.setRight(false);
+            keyLogic.setRight(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyThread.setLeft(false);
+            keyLogic.setLeft(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyThread.setUp(false);
+            keyLogic.setUp(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyThread.setDown(false);
+            keyLogic.setDown(false);
         }
     }
 }
