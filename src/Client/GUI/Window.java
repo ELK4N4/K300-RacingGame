@@ -42,6 +42,7 @@ public class Window extends JPanel {
         frame.setUndecorated(true);
         frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.setVisible(true);
+
     }
 
 
