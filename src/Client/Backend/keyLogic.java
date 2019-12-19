@@ -1,5 +1,7 @@
 package Client.Backend;
 
+import Client.Main;
+
 public class keyLogic implements Runnable {
 
     private double x;
@@ -8,23 +10,31 @@ public class keyLogic implements Runnable {
     private double Cy;
     private double direction;
     private boolean up, down, right, left;
+    private Main main;
 
-    public keyLogic(double x, double y) {
-        this.x = x;
-        this.y = y;
-        Cx = x;
-        Cy = y;
+    public keyLogic(Main main) {
         up = false;
         down = false;
         right = false;
         left = false;
+        this.main = main;
+    }
+
+    public void setX(double x){
+        this.x = x;
+        Cx = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+        Cy = y;
     }
 
     @Override
     public void run() {
         while (true) {
             myMove();
-            //TODO repaint();
+            main.repaint();
                 try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

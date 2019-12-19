@@ -1,5 +1,8 @@
 package Client.GUI;
 
+import Client.Backend.keyLogic;
+import Client.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +24,7 @@ public class Window extends JPanel {
     static double redCarX = SCREEN_WIDTH / 2.0;
     static double redCarY = SCREEN_HEIGHT / 2.0;
 
-    public Window(KeyListener keyListener){
+    public Window(Main main, KeyListener keyListener){
         frame = new JFrame();
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
@@ -31,9 +34,10 @@ public class Window extends JPanel {
         blueCarY -= redCar.getHeight() / 2.0;
         redCarX -= redCar.getWidth() / 2.0;
         redCarY -= redCar.getHeight() / 2.0;
+        // find players car todo
+        main.setBackendX(redCarX);
+        main.setBackendY(redCarY);
         frame.addKeyListener(keyListener);
-
-
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
