@@ -14,7 +14,7 @@ public class Window extends JPanel implements KeyListener {
     private static final int SCREEN_WIDTH = 1920;
     private static JFrame frame;
     private BufferedImage car;
-    //private ClickThread clickThread;
+    private keyThread keyThread;
     static double direction = 0;
     static double Xcar = SCREEN_WIDTH / 2.0;
     static double Ycar = SCREEN_HEIGHT / 2.0;
@@ -24,13 +24,13 @@ public class Window extends JPanel implements KeyListener {
         car = getImage("Images/car_blue.png");
         this.setBackground(Color.blue);
         frame.addKeyListener(this);
-        //new Thread(clickThread).start();
+        new Thread(keyThread).start();
         Xcar -= car.getWidth() / 2.0;
         Ycar -= car.getHeight() / 2.0;
     }
 
     public static void main(String[] args) {
-        frame = new JFrame("K300");
+        frame = new JFrame();
         JPanel panel = new Window();
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
@@ -74,11 +74,36 @@ public class Window extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-
+        if(keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+            keyThread.setRight(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+            keyThread.setLeft(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            keyThread.setUp(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            keyThread.setDown(true);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-
+        if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+            keyThread.setRight(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+            keyThread.setLeft(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            keyThread.setUp(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            keyThread.setDown(false);
+        }
     }
 }
