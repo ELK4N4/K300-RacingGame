@@ -107,7 +107,19 @@ public class keyLogic implements Runnable {
         */
 
     }
-
+    //todo fill them
+    public  double getDirection()
+    {
+        return direction;
+    }
+    public  double getX()
+    {
+        return x;
+    }
+    public  double getY()
+    {
+        return y;
+    }
     private double getY(double x) {
         double y;
         y = Math.tan(Math.toDegrees(direction)) * (x - Cx) ;
