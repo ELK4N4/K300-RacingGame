@@ -13,34 +13,42 @@ public class Window extends JPanel implements KeyListener {
     private static final int SCREEN_HEIGHT = 1080;
     private static final int SCREEN_WIDTH = 1920;
     private static JFrame frame;
-    private BufferedImage car;
+    private BufferedImage blueCar;
+    private BufferedImage redCar;
+    private BufferedImage background;
     private keyThread keyThread;
-    static double direction = 0;
-    static double Xcar = SCREEN_WIDTH / 2.0;
-    static double Ycar = SCREEN_HEIGHT / 2.0;
+    static double angle = 0;
+    static double blueCarX = SCREEN_WIDTH / 2.0;
+    static double blueCarY = SCREEN_HEIGHT / 2.0;
+    static double redCarX = SCREEN_WIDTH / 2.0;
+    static double redCarY = SCREEN_HEIGHT / 2.0;
 
-    private Window(){
+    public Window(){
+        frame = new JFrame();
         keyThread = new keyThread(this);
-        car = getImage("Images/car_blue.png");
+        blueCar = getImage("Images/car_blue_small.png");
+        redCar = getImage("Images/car_red_small.png");
+        background = getImage("Images/Track.jpg");
         this.setBackground(Color.blue);
         frame.addKeyListener(this);
         new Thread(keyThread).start();
-        Xcar -= car.getWidth() / 2.0;
-        Ycar -= car.getHeight() / 2.0;
-    }
+        blueCarX = redCar.getWidth() / 2.0;
+        blueCarY -= redCar.getHeight() / 2.0;
+        redCarX -= redCar.getWidth() / 2.0;
+        redCarY -= redCar.getHeight() / 2.0;
 
-    public static void main(String[] args) {
-        frame = new JFrame();
-        JPanel panel = new Window();
+
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        frame.add(this);
         frame.toFront();
         frame.setUndecorated(true);
         frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.setVisible(true);
     }
+
+
 
 
 
@@ -54,16 +62,20 @@ public class Window extends JPanel implements KeyListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        AffineTransform at = AffineTransform.getTranslateInstance(Xcar, Ycar);
+        AffineTransform atBlueCar = AffineTransform.getTranslateInstance(blueCarX, blueCarY);
+        AffineTransform atRedCar = AffineTransform.getTranslateInstance(redCarX, redCarY);
         g.setFont(new Font("arial", 1, 50));
         g.setColor(Color.red);
 
-        g.drawString(direction + "", 70, 50);
+        g.drawString(angle + "", 70, 50);
 
-        at.rotate(Math.toDegrees(direction), car.getWidth() / 2.0, car.getHeight() / 2.0);
+        atBlueCar.rotate(Math.toDegrees(angle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
+        atRedCar.rotate(Math.toDegrees(angle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
 
         Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.drawImage(car, at, null);
+        g.drawImage(background, 0, 0, this);
+        graphics2D.drawImage(blueCar, atBlueCar, null);
+        graphics2D.drawImage(redCar, atRedCar, null);
     }
 
 
