@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -23,9 +22,11 @@ public class Window extends JPanel implements KeyListener {
 
     private Window(){
         //clickThread = new ClickThread(this);
-        car = getImage("Images/car_blue.png");
+        //car = getImage("Images/car_blue.png");
         this.setBackground(Color.blue);
         frame.addKeyListener(this);
+        System.out.println(SCREEN_HEIGHT);
+        System.out.println(SCREEN_WIDTH);
         //new Thread(clickThread).start();
 //        x -= car.getWidth() / 2.0;
  //       y -= car.getHeight() / 2.0;
@@ -40,21 +41,9 @@ public class Window extends JPanel implements KeyListener {
         frame.add(panel);
         frame.setVisible(true);
     }
-/*
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-        g.setFont(new Font("arial", 1, 50));
-        g.setColor(Color.red);
 
-        g.drawString(direction + "", 70, 50);
 
-        at.rotate(Math.toDegrees(direction), banana.getWidth() / 2.0, banana.getHeight() / 2.0);
 
-        Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.drawImage(banana, at, null);
-    }
-*/
     private BufferedImage getImage(String imageName) {
         try {
             return ImageIO.read(getClass().getResource(imageName));
