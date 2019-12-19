@@ -1,6 +1,7 @@
 package Client;
 
 import BackandForth.Message;
+import Client.Backend.BackAndForth;
 import Client.Backend.KeyInput;
 import Client.Backend.keyLogic;
 import Client.GUI.Window;
@@ -16,7 +17,7 @@ public class Main {
     private Window window;
 
     private Main() throws IOException {
-        keyLogic = new keyLogic(this);
+        //keyLogic = new keyLogic(this);
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
         Socket socket;
@@ -25,9 +26,8 @@ public class Main {
         socket = new Socket(Message.IP,Message.PORT);
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
-        Message output = new Message(1.2, 1.8, 31, 5);
-        outputStream.writeObject(new Message(1.2,1.8,31,5));
         new Thread(keyLogic).start();
+        new Thread(new BackAndForth(this, keyLogic, outputStream, inputStream)).start();
     }
 
     public static void main(String[] args) throws IOException {
@@ -35,15 +35,15 @@ public class Main {
     }
 
     public void setBackendX(double x) {
-        keyLogic.setX(x);
+        //keyLogic.setX(x);
     }
 
     public void setBackendY(double y) {
-        keyLogic.setY(y);
+        //keyLogic.setY(y);
     }
 
     public void repaint() {
-        window.repaint();
+        //window.repaint();
     }
 
     public void setX(double x) {

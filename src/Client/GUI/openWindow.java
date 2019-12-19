@@ -17,7 +17,7 @@ public class openWindow extends JPanel {
     public static void main(String [] args){
 
        openWindow startWindow = new openWindow();
-        new Button();
+
     }
 
     public openWindow(){
@@ -26,19 +26,18 @@ public class openWindow extends JPanel {
         frame.setSize(1920,1080);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(this);
-        frame.toFront();
-        frame.setVisible(true);
-        button =new JButton(new ImageIcon("D:\\playB.jpg"));
-        button.setBounds(760,500,100, 40);
+        button = new JButton(new ImageIcon("Images/playButton.png"));
+        button.setBounds(0,0,10, 10);
 
-        frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null);
         frame.add(this);
+        frame.add(button);
         frame.toFront();
         frame.setUndecorated(true);
         frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+
         frame.setVisible(true);
+
     }
 
     public void paintComponent(Graphics g) {
