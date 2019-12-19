@@ -20,7 +20,7 @@ public class Window extends JPanel implements KeyListener {
     static double Ycar = SCREEN_HEIGHT / 2.0;
 
     private Window(){
-        //clickThread = new ClickThread(this);
+        keyThread = new keyThread(this);
         car = getImage("Images/car_blue.png");
         this.setBackground(Color.blue);
         frame.addKeyListener(this);
@@ -78,6 +78,7 @@ public class Window extends JPanel implements KeyListener {
             System.exit(0);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+            System.out.println("right");
             keyThread.setRight(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
