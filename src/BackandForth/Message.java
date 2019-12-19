@@ -17,6 +17,21 @@ public class Message implements Serializable {
         this.direction = direction;
         this.round = round;
     }
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+    public int getRound() {
+        return round;
+    }
 
     @Override
     public String toString() {
