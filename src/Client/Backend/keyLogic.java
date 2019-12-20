@@ -32,15 +32,13 @@ public class keyLogic implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("hello");
         while (true) {
             myMove();
             main.repaint();
-                try {
+            try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                System.out.println("error");
-                break;
+                e.printStackTrace();
             }
         }
     }
@@ -129,7 +127,7 @@ public class keyLogic implements Runnable {
         return y;
     }
 
-    private void calcXY(int n) {
+    private void calcXY(int n)   {
         double tx = n;
         double ty = getY(tx + x);
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
