@@ -5,6 +5,8 @@ import Client.Backend.BackAndForth;
 import Client.Backend.KeyInput;
 import Client.Backend.keyLogic;
 import Client.GUI.Window;
+import Client.GUI.openWindow;
+
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
@@ -34,7 +36,10 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+
+        openWindow startWindow = new openWindow();
         new Main();
+
     }
 
     public void setBackendX(double x) {
