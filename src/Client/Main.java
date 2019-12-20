@@ -18,6 +18,8 @@ public class Main {
         keyLogic = new keyLogic(this);
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
+        keyLogic.setImageHeight(window.getCarHeight());
+        keyLogic.setImageWidth(window.getCarWidth());
         new Thread(keyLogic).start();
         Socket socket;
         ObjectInputStream inputStream;
