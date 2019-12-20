@@ -1,7 +1,9 @@
 package Client.Backend;
 
+import BackandForth.Message;
 import Client.Main;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -21,9 +23,23 @@ public class BackAndForth implements  Runnable{
     @Override
     public void run() {
         while (true){
-            main.setX(keyLogic.getX());
-            main.setY(keyLogic.getY());
-            main.setDirection(keyLogic.getDirection());
+            main.setPlayersX(keyLogic.getX());
+            main.setPlayerY(keyLogic.getY());
+            main.setPlayerDirection(keyLogic.getDirection());
+            try {
+                outputStream.writeObject(new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), main.getRounds()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Message inputMessage = (Message) inputStream.readObject();
+                main.setEnemyX(inputMessage.getX());
+                main.setEnemyY(inputMessage.getY());
+                main.setEnemyDirection(inputMessage.getDirection());
+                main.setRound(inputMessage.getRound());
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
