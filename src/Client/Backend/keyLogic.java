@@ -1,21 +1,24 @@
 package Client.Backend;
 
 import Client.Main;
-
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 
 public class keyLogic implements Runnable {
 
-    private double x;
-    private double y;
-    private double Cx;
-    private double Cy;
-    private double direction;
+    private double x1;
+    private double y1;
+    private double Cx1;
+    private double Cy1;
+    private double direction1;
+    private double x2;
+    private double y2;
+    private double Cx2;
+    private double Cy2;
+    private double direction2;
     private double imageHeight;
     private double imageWidth;
     private boolean up, down, right, left;
-    private double speed;
+    private boolean w, s, d, a;
     private Main main;
     private Area playerCar;
     private Area enemyCar;
@@ -26,17 +29,26 @@ public class keyLogic implements Runnable {
         right = false;
         left = false;
         this.main = main;
-        this.speed = 0.1;
     }
 
-    public void setX(double x){
-        this.x = x;
-        Cx = x;
+    public void setX1(double x1){
+        this.x1 = x1;
+        Cx1 = x1;
     }
 
-    public void setY(double y) {
-        this.y = y;
-        Cy = y;
+    public void setY1(double y1) {
+        this.y1 = y1;
+        Cy1 = y1;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+        Cx2 = x2;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+        Cy2 = y2;
     }
 
     public void setImageHeight(double imageHeight) {
@@ -50,10 +62,11 @@ public class keyLogic implements Runnable {
     @Override
     public void run() {
         while (true) {
-            myMove();
+            myMove1();
+            myMove2();
             main.repaint();
             try {
-                Thread.sleep(7);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -64,37 +77,37 @@ public class keyLogic implements Runnable {
 
     }
 
-    private void myMove() {
+    private void myMove1() {
 
         if(up) {
             if(right) {
-                changeDirection(x, y, false);
+                changeDirection1(x1, y1, false);
             }
             if(left) {
-                changeDirection(x, y, true);
+                changeDirection1(x1, y1, true);
             }
 
-            if(direction >= -0.0276 && direction <= 0.0276) {
-                calcXYUp(1);
-            } else if(direction >= 0.0276 && direction <= 0.0822) {
-                calcXYUp(-1);
+            if(direction1 >= -0.0276 && direction1 <= 0.0276) {
+                calcXY1(1);
+            } else if(direction1 >= 0.0276 && direction1 <= 0.0822) {
+                calcXY1(-1);
             }
 
-        } else if(down) {
+
+        }
+        if(down) {
             if(right) {
-                changeDirection(x, y, true);
+                changeDirection1(x1, y1, false);
             }
             if(left) {
-                changeDirection(x, y, false);
+                changeDirection1(x1, y1, true);
             }
 
-            if(direction >= -0.0276 && direction <= 0.0276) {
-                calcXYDown(1);
-            } else if(direction >= 0.0276 && direction <= 0.0822) {
-                calcXYDown(-1);
+            if(direction1 >= -0.0276 && direction1 <= 0.0276) {
+                calcXYDown1(1);
+            } else if(direction1 >= 0.0276 && direction1 <= 0.0822) {
+                calcXYDown1(-1);
             }
-        } else if(!down && !up) {
-            speed = 0.1;
         }
 
 
@@ -129,63 +142,149 @@ public class keyLogic implements Runnable {
 
     }
 
-    public  double getDirection()
-    {
-        return direction;
+    private void myMove2() {
+
+        if(w) {
+            if(d) {
+                changeDirection1(x2, y2, false);
+            }
+            if(a) {
+                changeDirection1(x2, y2, true);
+            }
+
+            if(direction2 >= -0.0276 && direction2 <= 0.0276) {
+                calcXY1(1);
+            } else if(direction2 >= 0.0276 && direction2 <= 0.0822) {
+                calcXY1(-1);
+            }
+
+
+        }
+        if(s) {
+            if(d) {
+                changeDirection1(x2, y2, false);
+            }
+            if(a) {
+                changeDirection1(x2, y2, true);
+            }
+
+            if(direction2 >= -0.0276 && direction2 <= 0.0276) {
+                calcXYDown1(1);
+            } else if(direction2 >= 0.0276 && direction2 <= 0.0822) {
+                calcXYDown1(-1);
+            }
+        }
     }
-    public  double getX()
+
+    public  double getDirection1()
     {
-        return x;
+        return direction1;
     }
-    public  double getY()
+    public  double getX1()
     {
-        return y;
+        return x1;
     }
-    private double getY(double x) {
+    public  double getY1()
+    {
+        return y1;
+    }
+    private double getY1(double x) {
         double y;
-        y = Math.tan(Math.toDegrees(direction)) * (x - this.x) ;
-        y = y + this.y;
+        y = Math.tan(Math.toDegrees(direction1)) * (x - Cx1) ;
+        y = y + Cy1;
         return y;
     }
 
-    private void calcXYUp(double n)   {
-        double tx = n;
-        double ty = getY(tx + x);
-        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
-
-        if(speed <= 7) {
-            speed += 0.05;
-        } else if(speed > 7){
-            speed = 7;
-        }
-        x =  (x + (speed / td) * n);
-        y = y - (speed / td) *  (y - ty);
+    public double getDirection2() {
+        return direction2;
     }
 
-    private void calcXYDown(double n) {
-        double tx = n;
-        double ty = getY(tx + x);
-
-        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
-
-        x =  (x - (7 / td) * n);
-        y = y + (7 / td) *  (y - ty);
+    public double getX2() {
+        return x2;
     }
 
-    private void changeDirection(double x, double y, boolean left) {
-        Cx = x;
-        Cy = y;
-        if(direction >= 0.0822) {
-            direction = -0.0276;
+    public double getY2() {
+        return y2;
+    }
+
+    private double getY2(double x) {
+        double y;
+        y = Math.tan(Math.toDegrees(direction2)) * (x - Cx2) ;
+        y = y + Cy2;
+        return y;
+    }
+
+    private void calcXY1(int n)   {
+        double tx = n;
+        double ty = getY1(tx + x1);
+        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y1 - ty, 2));
+        x1 =  (x1 + (4 / td) * n);
+        y1 = y1 - (4 / td) *  (y1 - ty);
+    }
+
+    private void calcXYDown1(int n) {
+        double tx = n;
+        double ty = getY1(tx + x1);
+
+        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y1 - ty, 2));
+
+
+
+        x1 =  (x1 - (4 / td) * n);
+        y1 = y1 - (4 / td) *  (y1 - ty);
+    }
+
+    private void changeDirection1(double x, double y, boolean left) {
+        Cx1 = x;
+        Cy1 = y;
+        if(direction1 >= 0.0822) {
+            direction1 = -0.0276;
         }
-        else if(direction <= -0.0276) {
-            direction = 0.0822;
+        else if(direction1 <= -0.0276) {
+            direction1 = 0.0822;
         }
         if(left) {
-            direction -= 0.0006;
+            direction1 -= 0.0006;
 
         } else {
-            direction += 0.0006;
+            direction1 += 0.0006;
+        }
+    }
+
+    private void calcXY2(int n)   {
+        double tx = n;
+        double ty = getY1(tx + x2);
+        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y2 - ty, 2));
+        x2 =  (x2 + (4 / td) * n);
+        y2 = y2 - (4 / td) *  (y2 - ty);
+    }
+
+    private void calcXYDown2(int n) {
+        double tx = n;
+        double ty = getY1(tx + x2);
+
+        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y2 - ty, 2));
+
+
+
+        x2 =  (x2 - (4 / td) * n);
+        y2 = y2 - (4 / td) *  (y2 - ty);
+    }
+
+    private void changeDirection2(double x, double y, boolean left) {
+        Cx2 = x;
+        Cy2 = y;
+        if(direction2 >= 0.0822) {
+            direction2 = -0.0276;
+        }
+        else if(direction2 <= -0.0276) {
+            direction2 = 0.0822;
+        }
+        if(left) {
+            direction2 -= 0.0006;
+
+        } else {
+            direction2 += 0.0006;
         }
     }
 
@@ -205,5 +304,20 @@ public class keyLogic implements Runnable {
         this.left = left;
     }
 
+    public void setW(boolean w) {
+        this.w = w;
+    }
+
+    public void setS(boolean s) {
+        this.s = s;
+    }
+
+    public void setD(boolean d) {
+        this.d = d;
+    }
+
+    public void setA(boolean a) {
+        this.a = a;
+    }
 }
 

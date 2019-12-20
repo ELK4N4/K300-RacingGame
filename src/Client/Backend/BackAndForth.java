@@ -23,11 +23,14 @@ public class BackAndForth implements  Runnable{
     @Override
     public void run() {
         while (true){
-            main.setPlayersX(keyLogic.getX());
-            main.setPlayerY(keyLogic.getY());
-            main.setPlayerDirection(keyLogic.getDirection());
+            main.setPlayersX(keyLogic.getX1());
+            main.setPlayerY(keyLogic.getY1());
+            main.setPlayerDirection(keyLogic.getDirection1());
+            main.setEnemyX(keyLogic.getX2());
+            main.setEnemyY(keyLogic.getY2());
+            main.setEnemyDirection(keyLogic.getDirection2());
             try {
-                outputStream.writeObject(new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), main.getRounds()));
+                outputStream.writeObject(new Message(keyLogic.getX1(), keyLogic.getY1(), keyLogic.getDirection1(), main.getRounds()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

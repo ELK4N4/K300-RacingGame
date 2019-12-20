@@ -5,6 +5,8 @@ import Client.Backend.BackAndForth;
 import Client.Backend.KeyInput;
 import Client.Backend.keyLogic;
 import Client.GUI.Window;
+import Client.GUI.openWindow;
+
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
@@ -16,41 +18,36 @@ public class Main {
     private int round;
 
     private Main() throws IOException {
+        Socket socket;
+        socket = new Socket(Message.IP, Message.PORT);
+        BackAndForth backAndForth;
+        ObjectInputStream inputStream;
+        ObjectOutputStream outputStream;
         keyLogic = new keyLogic(this);
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
         keyLogic.setImageHeight(window.getCarHeight());
         keyLogic.setImageWidth(window.getCarWidth());
         new Thread(keyLogic).start();
-//        Socket socket;
-//        ObjectInputStream inputStream;
-//        ObjectOutputStream outputStream;
-//        socket = new Socket(Message.IP,Message.PORT);
-//        inputStream = new ObjectInputStream(socket.getInputStream());
-//        outputStream = new ObjectOutputStream(socket.getOutputStream());
-//        new Thread(new BackAndForth(this, keyLogic, outputStream, inputStream)).start();
-        run();
-    }
-
-    private void run() {
-        while (true) {
-            setX(keyLogic.getX());
-            System.out.println("");
-            setY(keyLogic.getY());
-            setDirection(keyLogic.getDirection());
-        }
+        inputStream = new ObjectInputStream(socket.getInputStream());
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
+        backAndForth = new BackAndForth(this, keyLogic, outputStream, inputStream);
+        new Thread(backAndForth).start();
     }
 
     public static void main(String[] args) throws IOException {
+
+        openWindow startWindow = new openWindow();
         new Main();
+
     }
 
     public void setBackendX(double x) {
-        keyLogic.setX(x);
+        keyLogic.setX1(x);
     }
 
     public void setBackendY(double y) {
-        keyLogic.setY(y);
+        keyLogic.setY1(y);
     }
 
     public void repaint() {
