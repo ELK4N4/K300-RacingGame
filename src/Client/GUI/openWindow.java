@@ -3,22 +3,21 @@ package Client.GUI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class openWindow extends JPanel {
+public class openWindow extends JPanel implements ActionListener{
 
-    private static JFrame frame;
+    public static JFrame frame;
     private BufferedImage backgroundImg;
     private JButton button;
     private Icon iconPlay;
 
-    public static void main(String [] args){
-
-       openWindow startWindow = new openWindow();
-
-    }
 
     public openWindow(){
         frame = new JFrame();
@@ -26,12 +25,10 @@ public class openWindow extends JPanel {
         frame.setSize(1920,1080);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        button = new JButton(new ImageIcon("Images/playButton.png"));
         button.setBounds(0,0,10, 10);
-
+        frame.add(button);
         frame.setLocationRelativeTo(null);
         frame.add(this);
-        frame.add(button);
         frame.toFront();
         frame.setUndecorated(true);
         frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
@@ -54,5 +51,26 @@ public class openWindow extends JPanel {
         }
     }
 
+    private void IconButton(){
+        setLayout(new FlowLayout());
+        button.addActionListener(button.getAction());
+        button = new JButton(new ImageIcon("Images/playButton.png"));
+        add(button);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        button.addActionListener( button.getAction() );//?!!?!?!?11?!!?
+    }
+
+
+
+
+
+    public void windowOpened(WindowEvent e) {}
+    public void windowActivated(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowDeactivated(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {}
 
 }
