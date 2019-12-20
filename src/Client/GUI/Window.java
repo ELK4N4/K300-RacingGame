@@ -25,6 +25,7 @@ public class Window extends JPanel {
     static double redCarY = SCREEN_HEIGHT / 2.0;
 
     public Window(Main main, KeyListener keyListener) {
+        new openWindow();
         frame = new JFrame();
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
