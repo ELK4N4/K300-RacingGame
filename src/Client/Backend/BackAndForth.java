@@ -20,29 +20,34 @@ public class BackAndForth implements  Runnable{
         this.inputStream = inputStream;
     }
 
+    public BackAndForth(Main main, Client.Backend.keyLogic keyLogic) {
+        this.main = main;
+        this.keyLogic = keyLogic;
+    }
+
     @Override
     public void run() {
         while (true){
-            main.setPlayersX(keyLogic.getX1());
-            main.setPlayerY(keyLogic.getY1());
+            main.setPlayersX(keyLogic.getX1(), keyLogic.getY1());
+            main.setPlayerY(keyLogic.getY1(), keyLogic.getX1());
             main.setPlayerDirection(keyLogic.getDirection1());
-            main.setEnemyX(keyLogic.getX2());
-            main.setEnemyY(keyLogic.getY2());
+            main.setEnemyX(keyLogic.getX2(), keyLogic.getY2());
+            main.setEnemyY(keyLogic.getY2(), keyLogic.getY2());
             main.setEnemyDirection(keyLogic.getDirection2());
-            try {
-                outputStream.writeObject(new Message(keyLogic.getX1(), keyLogic.getY1(), keyLogic.getDirection1(), main.getRounds()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Message inputMessage = (Message) inputStream.readObject();
-                main.setEnemyX(inputMessage.getX());
-                main.setEnemyY(inputMessage.getY());
-                main.setEnemyDirection(inputMessage.getDirection());
-                main.setRound(inputMessage.getRound());
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                outputStream.writeObject(new Message(keyLogic.getX1(), keyLogic.getY1(), keyLogic.getDirection1(), main.getRounds()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                Message inputMessage = (Message) inputStream.readObject();
+//                main.setEnemyX(inputMessage.getX());
+//                main.setEnemyY(inputMessage.getY());
+//                main.setEnemyDirection(inputMessage.getDirection());
+//                main.setRound(inputMessage.getRound());
+//            } catch (IOException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

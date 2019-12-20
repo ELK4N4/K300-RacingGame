@@ -10,19 +10,19 @@ public class Converter {
         this.height = height;
     }
 
-    private double getAxisX(double x){
-        return (double) x - (width/2);
+    public double getAxisX(double x){
+        return x - (width/2.0);
     }
 
-    private double getAxisY(double y){
-        return (double) -(y - (height/2));
+    public double getAxisY(double y){
+        return  -(y - (height/2.0));
     }
 
-    private double getFrameX(double x)
+    public double getFrameX(double x)
     {
         return (double)(width/2 )+x;
     }
-    private double getFrameY(double y)
+    public double getFrameY(double y)
     {
         return (double) (height/2)-y;
     }

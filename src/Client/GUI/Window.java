@@ -25,6 +25,7 @@ public class Window extends JPanel {
     static double redCarY = SCREEN_HEIGHT / 2.0 + 300;
 
     public Window(Main main, KeyListener keyListener) {
+        redIsPlayer = false;
         frame = new JFrame();
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
@@ -34,9 +35,10 @@ public class Window extends JPanel {
         blueCarY -= redCar.getHeight() / 2.0;
         redCarX -= redCar.getWidth() / 2.0;
         redCarY -= redCar.getHeight() / 2.0;
-        // find players car todo
-        main.setBackendX(redCarX);
-        main.setBackendY(redCarY);
+        main.setBackendX1(redCarX);
+        main.setBackendY1(redCarY);
+        main.setBackendX2(blueCarX);
+        main.setBackendY2(blueCarY);
         frame.addKeyListener(keyListener);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
@@ -68,9 +70,9 @@ public class Window extends JPanel {
 
     public void setEnemyY(double y) {
         if (redIsPlayer) {
-            blueCarX = y;
+            blueCarY = y;
         } else {
-            redCarX = y;
+            redCarY = y;
         }
     }
 
@@ -80,8 +82,6 @@ public class Window extends JPanel {
         } else {
             redCarX = x;
         }
-
-
     }
 
     public void setPlayerAngle(double angle) {

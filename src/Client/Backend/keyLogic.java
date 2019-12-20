@@ -28,6 +28,10 @@ public class keyLogic implements Runnable {
         down = false;
         right = false;
         left = false;
+        w = false;
+        s = false;
+        d = false;
+        a = false;
         this.main = main;
     }
 
@@ -97,10 +101,10 @@ public class keyLogic implements Runnable {
         }
         if(down) {
             if(right) {
-                changeDirection1(x1, y1, false);
+                changeDirection1(x1, y1, true);
             }
             if(left) {
-                changeDirection1(x1, y1, true);
+                changeDirection1(x1, y1, false);
             }
 
             if(direction1 >= -0.0276 && direction1 <= 0.0276) {
@@ -110,68 +114,37 @@ public class keyLogic implements Runnable {
             }
         }
 
-
-        /*
-       if(up) {
-            if(Test2.direction >= -0.0276 && Test2.direction <= 0.0276) {
-                Test2.x += 3;
-            } else if(Test2.direction >= 0.0276 && Test2.direction <= 0.0822) {
-                Test2.x -= 3;
-            }
-            Test2.y = getY(Test2.x);
-            up = false;
-        }
-        if(down) {
-            if(Test2.direction >= -0.0276 && Test2.direction <= 0.0276) {
-                Test2.x -= 3;
-            } else if(Test2.direction >= 0.0276 && Test2.direction <= 0.0822) {
-                Test2.x += 3;
-            }
-            Test2.y = getY(Test2.x);
-            down = false;
-        }
-        if(right) {
-            changeDirection(Test2.x, Test2.y, false);
-            right = false;
-        }
-        if(left) {
-            changeDirection(Test2.x, Test2.y, true);
-            left = false;
-        }
-        */
-
     }
 
     private void myMove2() {
 
         if(w) {
             if(d) {
-                changeDirection1(x2, y2, false);
+                changeDirection2(x2, y2, false);
             }
             if(a) {
-                changeDirection1(x2, y2, true);
+                changeDirection2(x2, y2, true);
             }
 
             if(direction2 >= -0.0276 && direction2 <= 0.0276) {
-                calcXY1(1);
+                calcXY2(1);
             } else if(direction2 >= 0.0276 && direction2 <= 0.0822) {
-                calcXY1(-1);
+                calcXY2(-1);
             }
 
 
         }
         if(s) {
             if(d) {
-                changeDirection1(x2, y2, false);
+                changeDirection2(x2, y2, true);
             }
             if(a) {
-                changeDirection1(x2, y2, true);
+                changeDirection2(x2, y2, false);
             }
-
             if(direction2 >= -0.0276 && direction2 <= 0.0276) {
-                calcXYDown1(1);
+                calcXYDown2(1);
             } else if(direction2 >= 0.0276 && direction2 <= 0.0822) {
-                calcXYDown1(-1);
+                calcXYDown2(-1);
             }
         }
     }
@@ -253,7 +226,7 @@ public class keyLogic implements Runnable {
 
     private void calcXY2(int n)   {
         double tx = n;
-        double ty = getY1(tx + x2);
+        double ty = getY2(tx + x2);
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y2 - ty, 2));
         x2 =  (x2 + (4 / td) * n);
         y2 = y2 - (4 / td) *  (y2 - ty);
