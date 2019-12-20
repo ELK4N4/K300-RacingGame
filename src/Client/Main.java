@@ -1,11 +1,10 @@
 package Client;
 
 import BackandForth.Message;
+import Client.Backend.BackAndForth;
 import Client.Backend.KeyInput;
 import Client.Backend.keyLogic;
 import Client.GUI.Window;
-
-
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
@@ -20,15 +19,14 @@ public class Main {
         keyLogic = new keyLogic(this);
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
+        new Thread(keyLogic).start();
         Socket socket;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         socket = new Socket(Message.IP,Message.PORT);
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
-        Message output = new Message(1.2, 1.8, 31, 5);
-        outputStream.writeObject(new Message(1.2,1.8,31,5));
-        new Thread(keyLogic).start();
+        new Thread(new BackAndForth(this, keyLogic, outputStream, inputStream)).start();
     }
 
     public static void main(String[] args) throws IOException {

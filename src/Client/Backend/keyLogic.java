@@ -35,16 +35,16 @@ public class keyLogic implements Runnable {
         while (true) {
             myMove();
             main.repaint();
-                try {
+            try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                System.out.println("error");
-                break;
+                e.printStackTrace();
             }
         }
     }
 
     private void myMove() {
+
         if(up) {
             if(right) {
                 changeDirection(x, y, false);
@@ -107,7 +107,7 @@ public class keyLogic implements Runnable {
         */
 
     }
-    //todo fill them
+
     public  double getDirection()
     {
         return direction;
@@ -127,7 +127,7 @@ public class keyLogic implements Runnable {
         return y;
     }
 
-    private void calcXY(int n) {
+    private void calcXY(int n)   {
         double tx = n;
         double ty = getY(tx + x);
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));

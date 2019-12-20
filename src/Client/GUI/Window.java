@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Window extends JPanel {
-    private static final int SCREEN_HEIGHT = 1080;
-    private static final int SCREEN_WIDTH = 1920;
+    private static final int SCREEN_HEIGHT = 600;//1080;
+    private static final int SCREEN_WIDTH = 800;//1920;
     private static JFrame frame;
     private BufferedImage blueCar;
     private BufferedImage redCar;
