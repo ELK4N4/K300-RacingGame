@@ -24,6 +24,8 @@ public class Main {
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         keyLogic = new keyLogic(this);
+        KeyListener listener = new KeyInput(keyLogic);
+        window = new Window(this, listener);
         keyLogic.setImageHeight(window.getCarHeight());
         keyLogic.setImageWidth(window.getCarWidth());
         new Thread(keyLogic).start();
@@ -33,13 +35,10 @@ public class Main {
         new Thread(backAndForth).start();
     }
 
-    private Main(int x) {
-        openWindow startWindow = new openWindow(this);
-    }
-
     public static void main(String[] args) throws IOException {
-        new Main(6);
 
+        //openWindow startWindow = new openWindow();
+        new Main();
 
     }
 
@@ -64,25 +63,41 @@ public class Main {
     }
 
     public void setPlayersX(double x, double y) {
-        if((x-1000) * (x-1000) + 3 * ((y-600) * (y-600)) <= 990000) {
+        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
             window.setPlayerX(x);
+        }else {
+           // window.setPlayerX(x);
+            window.setPlayerX(700);
+            setBackendX1(700);
         }
     }
     public void setEnemyX(double x, double y){
-        if((x-1000) * (x-1000) + 3 * ((y-600) * (y-600)) <= 990000) {
+        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
             window.setEnemyX(x);
+        } else {
+            //window.setEnemyX(x);
+            window.setEnemyX(700);
+            setBackendX2(700);
         }
     }
-
+//eq1: (x-900)^(2)+3(y-500)^(2)=800000
     public void setPlayerY(double y, double x) {
-        if((x-1000) * (x-1000) + 3 * ((y-600) * (y-600)) <= 990000) {
+        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
             window.setPlayerY(y);
+        }else {
+           // window.setPlayerY(y);
+            window.setPlayerY(700);
+            setBackendY1(700);
         }
     }
     
     public void setEnemyY(double y, double x){
-        if((x-1000) * (x-1000) + 3 * ((y-600) * (y-600)) <= 990000) {
+        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5* ((y-600) * (y-600)) >= 10000) {
             window.setEnemyY(y);
+        }else {
+            //window.setEnemyY(y);
+            window.setEnemyY(700);
+            setBackendY2(700);
         }
     }
 
@@ -101,7 +116,5 @@ public class Main {
     }
 
     public void startGame() {
-        KeyListener listener = new KeyInput(keyLogic);
-        window = new Window(this, listener);
     }
 }
