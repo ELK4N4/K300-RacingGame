@@ -33,6 +33,18 @@ public class KeyInput implements KeyListener {
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
             keyLogic.setDown(true);
         }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_D) {
+            keyLogic.setD(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
+            keyLogic.setA(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_W) {
+            keyLogic.setW(true);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
+            keyLogic.setS(true);
+        }
     }
 
     @Override
@@ -48,6 +60,18 @@ public class KeyInput implements KeyListener {
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
             keyLogic.setDown(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_D) {
+            keyLogic.setD(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
+            keyLogic.setA(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_W) {
+            keyLogic.setW(false);
+        }
+        if(keyEvent.getKeyCode() == KeyEvent.VK_S) {
+            keyLogic.setS(false);
         }
     }
 }

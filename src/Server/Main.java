@@ -23,7 +23,9 @@ public class Main {
         serverSocket = new ServerSocket(Message.PORT);
         int count = 1;
         do {
+            System.out.println("unconnected");
             clientSocket = serverSocket.accept();
+            System.out.println("connected");
             outputStream = clientSocket.getOutputStream();
             inputStream = clientSocket.getInputStream();
             objectOutputStream = new ObjectOutputStream(outputStream);
