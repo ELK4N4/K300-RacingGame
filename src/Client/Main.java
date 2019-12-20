@@ -13,11 +13,14 @@ public class Main {
 
     private keyLogic keyLogic;
     private Window window;
+    private int round;
 
     private Main() throws IOException {
         keyLogic = new keyLogic(this);
         KeyListener listener = new KeyInput(keyLogic);
         window = new Window(this, listener);
+        keyLogic.setImageHeight(window.getCarHeight());
+        keyLogic.setImageWidth(window.getCarWidth());
         new Thread(keyLogic).start();
 //        Socket socket;
 //        ObjectInputStream inputStream;
@@ -54,15 +57,32 @@ public class Main {
         window.repaint();
     }
 
-    public void setX(double x) {
+    public void setPlayersX(double x) {
         window.setPlayerX(x);
     }
-
-    public void setY(double y) {
-        window.setPlayerY(y);
+    public void setEnemyX(double x){
+        window.setEnemyX(x);
     }
 
-    public void setDirection(double direction) {
-        window.setAngle(direction);
+    public void setPlayerY(double y) {
+        window.setPlayerY(y);
+    }
+    
+    public void setEnemyY(double y){
+        window.setEnemyY(y);
+    }
+
+    public void setPlayerDirection(double direction) {
+        window.setPlayerAngle(direction);
+    }
+    public void setEnemyDirection(double direction){
+        window.setEnemyAngle(direction);
+    }
+
+    public int getRounds() {
+        return round;
+    }
+
+    public void setRound(int round) {
     }
 }

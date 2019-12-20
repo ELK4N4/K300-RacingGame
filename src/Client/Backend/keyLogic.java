@@ -2,6 +2,9 @@ package Client.Backend;
 
 import Client.Main;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+
 public class keyLogic implements Runnable {
 
     private double x;
@@ -9,9 +12,13 @@ public class keyLogic implements Runnable {
     private double Cx;
     private double Cy;
     private double direction;
+    private double imageHeight;
+    private double imageWidth;
     private boolean up, down, right, left;
     private double speed;
     private Main main;
+    private Area playerCar;
+    private Area enemyCar;
 
     public keyLogic(Main main) {
         up = false;
@@ -32,6 +39,14 @@ public class keyLogic implements Runnable {
         Cy = y;
     }
 
+    public void setImageHeight(double imageHeight) {
+        this.imageHeight = imageHeight;
+    }
+
+    public void setImageWidth(double imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -43,6 +58,10 @@ public class keyLogic implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void isIntersects() {
+
     }
 
     private void myMove() {

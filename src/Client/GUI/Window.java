@@ -24,7 +24,7 @@ public class Window extends JPanel {
     static double redCarX = SCREEN_WIDTH / 2.0;
     static double redCarY = SCREEN_HEIGHT / 2.0 + 300;
 
-    public Window(Main main, KeyListener keyListener){
+    public Window(Main main, KeyListener keyListener) {
         frame = new JFrame();
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
@@ -49,30 +49,64 @@ public class Window extends JPanel {
 
     }
 
-    public void setPlayerX(double x){
-        if(redIsPlayer){
+    public void setPlayerX(double x) {
+        if (redIsPlayer) {
             redCarX = x;
         } else {
             blueCarX = x;
         }
     }
-    public void setPlayerY(double y){
-        if(redIsPlayer){
-            redCarY =y;
+
+
+    public void setPlayerY(double y) {
+        if (redIsPlayer) {
+            redCarY = y;
         } else {
-                blueCarY =y;
-            }
-    }public  void setAngle(double angle)
-    {
-     if(redIsPlayer)
-     {
-         redAngle = angle;
-     } else {
-         blueAngle = angle;
-     }
+            blueCarY = y;
+        }
+    }
+
+    public void setEnemyY(double y) {
+        if (redIsPlayer) {
+            blueCarX = y;
+        } else {
+            redCarX = y;
+        }
+    }
+
+    public void setEnemyX(double x) {
+        if (redIsPlayer) {
+            blueCarX = x;
+        } else {
+            redCarX = x;
+        }
+
 
     }
 
+    public void setPlayerAngle(double angle) {
+        if (redIsPlayer) {
+            redAngle = angle;
+        } else {
+            blueAngle = angle;
+        }
+    }
+
+    public void setEnemyAngle(double angle) {
+        if (redIsPlayer) {
+            blueAngle = angle;
+        } else {
+            redAngle = angle;
+        }
+    }
+
+    public double getCarHeight() {
+        return redCar.getHeight();
+    }
+
+    public double getCarWidth() {
+        return redCar.getWidth();
+    }
 
     private BufferedImage getImage(String imageName) {
         try {
@@ -97,5 +131,7 @@ public class Window extends JPanel {
         graphics2D.drawImage(blueCar, atBlueCar, null);
         graphics2D.drawImage(redCar, atRedCar, null);
     }
+
+
 
 }
