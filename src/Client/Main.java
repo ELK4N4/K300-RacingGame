@@ -33,10 +33,13 @@ public class Main {
         new Thread(backAndForth).start();
     }
 
-    public static void main(String[] args) throws IOException {
+    private Main(int x) {
+        openWindow startWindow = new openWindow(this);
+    }
 
-        //openWindow startWindow = new openWindow();
-        new Main();
+    public static void main(String[] args) throws IOException {
+        new Main(6);
+
 
     }
 
