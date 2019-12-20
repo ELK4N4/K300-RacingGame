@@ -10,6 +10,7 @@ public class keyLogic implements Runnable {
     private double Cy;
     private double direction;
     private boolean up, down, right, left;
+    private double speed;
     private Main main;
 
     public keyLogic(Main main) {
@@ -18,6 +19,7 @@ public class keyLogic implements Runnable {
         right = false;
         left = false;
         this.main = main;
+        this.speed = 0.1;
     }
 
     public void setX(double x){
@@ -36,7 +38,7 @@ public class keyLogic implements Runnable {
             myMove();
             main.repaint();
             try {
-                Thread.sleep(10);
+                Thread.sleep(7);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -54,14 +56,12 @@ public class keyLogic implements Runnable {
             }
 
             if(direction >= -0.0276 && direction <= 0.0276) {
-                calcXY(1);
+                calcXYUp(1);
             } else if(direction >= 0.0276 && direction <= 0.0822) {
-                calcXY(-1);
+                calcXYUp(-1);
             }
 
-
-        }
-        if(down) {
+        } else if(down) {
             if(right) {
                 changeDirection(x, y, true);
             }
@@ -74,6 +74,8 @@ public class keyLogic implements Runnable {
             } else if(direction >= 0.0276 && direction <= 0.0822) {
                 calcXYDown(-1);
             }
+        } else if(!down && !up) {
+            speed = 0.1;
         }
 
 
@@ -127,22 +129,28 @@ public class keyLogic implements Runnable {
         return y;
     }
 
-    private void calcXY(int n)   {
+    private void calcXYUp(double n)   {
         double tx = n;
         double ty = getY(tx + x);
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
-        x =  (x + (4 / td) * n);
-        y = y - (4 / td) *  (y - ty);
+
+        if(speed <= 7) {
+            speed += 0.05;
+        } else if(speed > 7){
+            speed = 7;
+        }
+        x =  (x + (speed / td) * n);
+        y = y - (speed / td) *  (y - ty);
     }
 
-    private void calcXYDown(int n) {
+    private void calcXYDown(double n) {
         double tx = n;
         double ty = getY(tx + x);
 
         double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
 
-        x =  (x - (4 / td) * n);
-        y = y + (4 / td) *  (y - ty);
+        x =  (x - (7 / td) * n);
+        y = y + (7 / td) *  (y - ty);
     }
 
     private void changeDirection(double x, double y, boolean left) {

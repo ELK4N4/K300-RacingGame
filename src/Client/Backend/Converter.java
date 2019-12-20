@@ -10,23 +10,19 @@ public class Converter {
         this.height = height;
     }
 
-    public double getX(){
-        int x;
-        x = 0;// change to get x from moshe
-        return convertX(x);
+    private double getAxisX(double x){
+        return (double) x - (width/2);
     }
 
-    public double getY() {
-        int y;
-        y = 0;// change to get y form moshe
-        return  convertY(y);
+    private double getAxisY(double y){
+        return (double) -(y - (height/2));
     }
 
-    private double convertX(double x)
+    private double getFrameX(double x)
     {
         return (double)(width/2 )+x;
     }
-    private double convertY(double y)
+    private double getFrameY(double y)
     {
         return (double) (height/2)-y;
     }

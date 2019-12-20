@@ -32,7 +32,7 @@ public class Main {
     private void run() {
         while (true) {
             setX(keyLogic.getX());
-            System.out.println("enterd");
+            System.out.println("");
             setY(keyLogic.getY());
             setDirection(keyLogic.getDirection());
         }
