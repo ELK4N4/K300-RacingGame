@@ -1,13 +1,9 @@
 package Client.GUI;
 
-import BackandForth.Message;
-import Client.Backend.BackAndForth;
-import Client.Backend.KeyInput;
-import Client.Backend.keyLogic;
+import Client.Backend.KeyLogic;
 import Client.Main;
 
 import javax.imageio.ImageIO;
-import javax.management.MBeanAttributeInfo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,9 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 public class openWindow extends JPanel implements ActionListener{
 
@@ -26,7 +19,7 @@ public class openWindow extends JPanel implements ActionListener{
     private BufferedImage backgroundImg;
     private JButton button;
     private Window window;
-    private keyLogic keyLogic;
+    private KeyLogic keyLogic;
     private Main main;
 
     public openWindow(Main main){
@@ -41,7 +34,7 @@ public class openWindow extends JPanel implements ActionListener{
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                main.startGame();
+                //main.startGame();
             }
 
             @Override

@@ -1,26 +1,24 @@
 package Client.Backend;
 
-import BackandForth.Message;
 import Client.Main;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class BackAndForth implements  Runnable{
     private Main main;
-    private keyLogic keyLogic;
+    private KeyLogic keyLogic;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
 
-    public BackAndForth(Main main, Client.Backend.keyLogic keyLogic, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+    public BackAndForth(Main main, KeyLogic keyLogic, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
         this.main = main;
         this.keyLogic = keyLogic;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
     }
 
-    public BackAndForth(Main main, Client.Backend.keyLogic keyLogic) {
+    public BackAndForth(Main main, KeyLogic keyLogic) {
         this.main = main;
         this.keyLogic = keyLogic;
     }
@@ -28,12 +26,13 @@ public class BackAndForth implements  Runnable{
     @Override
     public void run() {
         while (true){
-            main.setPlayersX(keyLogic.getX1(), keyLogic.getY1());
-            main.setPlayerY(keyLogic.getY1(), keyLogic.getX1());
-            main.setPlayerDirection(keyLogic.getDirection1());
-            main.setEnemyX(keyLogic.getX2(), keyLogic.getY2());
-            main.setEnemyY(keyLogic.getY2(), keyLogic.getY2());
-            main.setEnemyDirection(keyLogic.getDirection2());
+            main.setPlayersX(keyLogic.getX(), keyLogic.getY());
+            main.setPlayerY(keyLogic.getY(), keyLogic.getX());
+            main.setPlayerDirection(keyLogic.getDirection());
+            //todo get this from server
+//            main.setEnemyX(keyLogic.getX2(), keyLogic.getY2());
+//            main.setEnemyY(keyLogic.getY2(), keyLogic.getY2());
+//            main.setEnemyDirection(keyLogic.getDirection2());
 //            try {
 //                outputStream.writeObject(new Message(keyLogic.getX1(), keyLogic.getY1(), keyLogic.getDirection1(), main.getRounds()));
 //            } catch (IOException e) {
