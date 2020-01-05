@@ -15,21 +15,25 @@ public class Window extends JPanel {
     private static final int SCREEN_WIDTH = 1920;
     private BufferedImage blueCar;
     private BufferedImage redCar;
+    private BufferedImage yellowCar;
     private BufferedImage background;
     private CarColor playersCarColor;
-    static double blueAngle = 0;
-    static double redAngle = 0;
+    static double blueCarAngle = 0;
+    static double redCarAngle = 0;
+    static double yellowCarAngle = 0;
     static double blueCarX = SCREEN_WIDTH / 2.0;
     static double blueCarY = SCREEN_HEIGHT / 2.0 + 300;
     static double redCarX = SCREEN_WIDTH / 2.0;
     static double redCarY = SCREEN_HEIGHT / 2.0 + 300;
+    static double yellowCarX = SCREEN_WIDTH / 2.0;
+    static double yellowCarY = SCREEN_HEIGHT / 2.0 + 300;
 
     public Window(CarColor playersCarColor, KeyListener keyListener) {
         this.playersCarColor = playersCarColor;
-        System.out.println(playersCarColor);
         JFrame frame = new JFrame();
         blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
+        yellowCar = getImage("Images/car_yellow_small.png");
         background = getImage("Images/Track.jpg");
         this.setBackground(Color.blue);
         blueCarX = redCar.getWidth() / 2.0;
@@ -59,24 +63,30 @@ public class Window extends JPanel {
     public void setPlayerX(double x) {
         if (playerIsRed()) {
             redCarX = x;
-        } else {
+        } else if(playerIsBlue()) {
             blueCarX = x;
+        } else {
+            yellowCarX = x;
         }
     }
 
     public void setPlayerY(double y) {
         if (playerIsRed()) {
             redCarY = y;
-        } else {
+        } else if(playerIsBlue()){
             blueCarY = y;
+        } else {
+            yellowCarY = y;
         }
     }
 
     public void setPlayerAngle(double angle) {
         if (playerIsRed()) {
-            redAngle = angle;
+            redCarAngle = angle;
+        } else if(playerIsBlue()){
+            blueCarAngle = angle;
         } else {
-            blueAngle = angle;
+            yellowCarAngle = angle;
         }
     }
 
@@ -98,25 +108,29 @@ public class Window extends JPanel {
 
     public void setEnemyAngle(double angle) {
         if (playerIsRed()) {
-            blueAngle = angle;
+            blueCarAngle = angle;
         } else {
-            redAngle = angle;
+            redCarAngle = angle;
         }
     }
 
     public double getPlayersX() {
         if(playerIsRed()) {
             return redCarX;
-        } else {
+        } else if(playerIsBlue()) {
             return blueCarX;
+        } else {
+            return yellowCarX;
         }
     }
 
     public double getPlayersY() {
         if(playerIsRed()) {
             return redCarY;
-        } else {
+        } else if(playerIsBlue()){
             return blueCarY;
+        } else {
+            return yellowCarY;
         }
     }
 
@@ -153,16 +167,19 @@ public class Window extends JPanel {
         super.paintComponent(g);
         AffineTransform atBlueCar = AffineTransform.getTranslateInstance(blueCarX, blueCarY);
         AffineTransform atRedCar = AffineTransform.getTranslateInstance(redCarX, redCarY);
+        //AffineTransform atYellowCar = AffineTransform.getTranslateInstance(yellowCarX, yellowCarY);
         g.setFont(new Font("arial", 1, 50));
         g.setColor(Color.red);
 
-        atBlueCar.rotate(Math.toDegrees(blueAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
-        atRedCar.rotate(Math.toDegrees(redAngle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
+        atBlueCar.rotate(Math.toDegrees(blueCarAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
+        atRedCar.rotate(Math.toDegrees(redCarAngle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
+        //atRedCar.rotate(Math.toDegrees(yellowCarAngle), yellowCar.getWidth() / 2.0, yellowCar.getHeight() / 2.0);
 
         Graphics2D graphics2D = (Graphics2D) g;
         g.drawImage(background, 0, 0, this);
         graphics2D.drawImage(blueCar, atBlueCar, null);
         graphics2D.drawImage(redCar, atRedCar, null);
+        //graphics2D.drawImage(yellowCar, atYellowCar, null);
     }
 
 

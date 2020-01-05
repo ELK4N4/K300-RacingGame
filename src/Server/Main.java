@@ -30,7 +30,6 @@ public class Main {
             clientSocket = serverSocket.accept();
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println(carColors[clientCount]);
             objectOutputStream.writeObject(carColors[clientCount].toString());
             clientList.add(new Client(objectInputStream, objectOutputStream, clientCount));
             clientCount++;
