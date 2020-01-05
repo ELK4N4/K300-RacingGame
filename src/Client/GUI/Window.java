@@ -1,5 +1,7 @@
 package Client.GUI;
 
+import BackandForth.CarColor;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class Window extends JPanel {
     private BufferedImage blueCar;
     private BufferedImage redCar;
     private BufferedImage background;
-    private boolean redIsPlayer;
+    private CarColor playersCarColor;
     static double blueAngle = 0;
     static double redAngle = 0;
     static double blueCarX = SCREEN_WIDTH / 2.0;
@@ -22,15 +24,16 @@ public class Window extends JPanel {
     static double redCarX = SCREEN_WIDTH / 2.0;
     static double redCarY = SCREEN_HEIGHT / 2.0 + 300;
 
-    public Window(KeyListener keyListener) {
-        redIsPlayer = true;
+    public Window(CarColor playersCarColor, KeyListener keyListener) {
+        this.playersCarColor = playersCarColor;
+        System.out.println(playersCarColor);
         JFrame frame = new JFrame();
-//        blueCar = getImage("Images/car_blue_small.png");
+        blueCar = getImage("Images/car_blue_small.png");
         redCar = getImage("Images/car_red_small.png");
         background = getImage("Images/Track.jpg");
         this.setBackground(Color.blue);
-//        blueCarX = redCar.getWidth() / 2.0;
-//        blueCarY -= redCar.getHeight() / 2.0;
+        blueCarX = redCar.getWidth() / 2.0;
+        blueCarY -= redCar.getHeight() / 2.0;
         redCarX -= redCar.getWidth() / 2.0;
         redCarY -= redCar.getHeight() / 2.0;
         frame.addKeyListener(keyListener);
@@ -54,7 +57,7 @@ public class Window extends JPanel {
     }
 
     public void setPlayerX(double x) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             redCarX = x;
         } else {
             blueCarX = x;
@@ -62,7 +65,7 @@ public class Window extends JPanel {
     }
 
     public void setPlayerY(double y) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             redCarY = y;
         } else {
             blueCarY = y;
@@ -70,7 +73,7 @@ public class Window extends JPanel {
     }
 
     public void setPlayerAngle(double angle) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             redAngle = angle;
         } else {
             blueAngle = angle;
@@ -78,7 +81,7 @@ public class Window extends JPanel {
     }
 
     public void setEnemyY(double y) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             blueCarY = y;
         } else {
             redCarY = y;
@@ -86,7 +89,7 @@ public class Window extends JPanel {
     }
 
     public void setEnemyX(double x) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             blueCarX = x;
         } else {
             redCarX = x;
@@ -94,7 +97,7 @@ public class Window extends JPanel {
     }
 
     public void setEnemyAngle(double angle) {
-        if (redIsPlayer) {
+        if (playerIsRed()) {
             blueAngle = angle;
         } else {
             redAngle = angle;
@@ -102,7 +105,7 @@ public class Window extends JPanel {
     }
 
     public double getPlayersX() {
-        if(redIsPlayer) {
+        if(playerIsRed()) {
             return redCarX;
         } else {
             return blueCarX;
@@ -110,15 +113,16 @@ public class Window extends JPanel {
     }
 
     public double getPlayersY() {
-        if(redIsPlayer) {
+        if(playerIsRed()) {
             return redCarY;
         } else {
             return blueCarY;
         }
     }
 
+    // for collision detection
     public double getEnemyX() {
-        if(redIsPlayer) {
+        if(playerIsRed()) {
             return blueCarX;
         } else {
             return redCarX;
@@ -126,28 +130,41 @@ public class Window extends JPanel {
     }
 
     public double getEnemyY() {
-        if(redIsPlayer) {
+        if(playerIsRed()) {
             return blueCarY;
         } else {
             return redCarY;
         }
     }
 
+    private boolean playerIsRed() {
+        return playersCarColor == CarColor.RED;
+    }
+
+    private boolean playerIsBlue() {
+        return playersCarColor == CarColor.BLUE;
+    }
+
+    private boolean playerIsYellow() {
+        return playersCarColor == CarColor.YELLOW;
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //AffineTransform atBlueCar = AffineTransform.getTranslateInstance(blueCarX, blueCarY);
+        AffineTransform atBlueCar = AffineTransform.getTranslateInstance(blueCarX, blueCarY);
         AffineTransform atRedCar = AffineTransform.getTranslateInstance(redCarX, redCarY);
         g.setFont(new Font("arial", 1, 50));
         g.setColor(Color.red);
 
-        //atBlueCar.rotate(Math.toDegrees(blueAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
+        atBlueCar.rotate(Math.toDegrees(blueAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);
         atRedCar.rotate(Math.toDegrees(redAngle), redCar.getWidth() / 2.0, redCar.getHeight() / 2.0);
 
         Graphics2D graphics2D = (Graphics2D) g;
         g.drawImage(background, 0, 0, this);
-        //graphics2D.drawImage(blueCar, atBlueCar, null);
+        graphics2D.drawImage(blueCar, atBlueCar, null);
         graphics2D.drawImage(redCar, atRedCar, null);
     }
+
 
 
 }

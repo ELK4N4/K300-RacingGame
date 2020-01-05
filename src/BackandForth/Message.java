@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     public static final int PORT = 9090;
-    public static final String IP = "192.168.1.63";
+    public static final String IP = "127.0.0.1";
     public double x;
     public double y;
     public double direction;
@@ -16,22 +16,6 @@ public class Message implements Serializable {
         this.y = y;
         this.direction = direction;
         this.round = round;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getDirection() {
-        return direction;
-    }
-
-    public int getRound() {
-        return round;
     }
 
     @Override
