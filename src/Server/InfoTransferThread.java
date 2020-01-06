@@ -20,7 +20,8 @@ public class InfoTransferThread implements Runnable{
     public void run() {
         while (run) {
             try {
-                outputStream.writeObject(inputStream.readObject());
+                Object message = inputStream.readObject();
+                outputStream.writeObject(message);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

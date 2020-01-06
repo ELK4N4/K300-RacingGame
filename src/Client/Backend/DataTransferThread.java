@@ -25,25 +25,31 @@ public class DataTransferThread implements  Runnable {
     @Override
     public void run() {
         Message outputMessage;
+        new Thread(() -> {
+            while (run) {
+                playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
+            }
+        }).start();
         while (run){
-            playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
-            System.out.println(keyTranslator.getX() + "," + keyTranslator.getY());
-//            try {
-//                outputMessage = new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor());
-//                System.out.println(outputMessage);
-//                outputStream.writeObject(outputMessage);
-//                System.out.println("sent");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                System.out.println("receiving");
-//                Message inputMessage = (Message) inputStream.readObject();
-//                System.out.println("reading " + inputMessage);
-//                playersDataBase.setCarInfo(inputMessage.carColor, inputMessage.x, inputMessage.y, inputMessage.direction);
-//            } catch (IOException | ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                outputMessage = new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor());
+                System.out.println(outputMessage);
+                outputStream.writeObject(outputMessage);
+                System.out.println("sent");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                System.out.println("receiving");
+                Object input = inputStream.readObject();
+                if(input instanceof Message) {
+                    Message inputMessage = (Message) input;
+                    System.out.println("reading " + inputMessage);
+                    playersDataBase.setCarInfo(inputMessage.carColor, inputMessage.x, inputMessage.y, inputMessage.direction);
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

@@ -22,7 +22,6 @@ public class Main {
         ObjectOutputStream objectOutputStream;
         ObjectInputStream objectInputStream;
         clientCount = 0;
-        // if there are more than 3 clients this function will need to change
         carColors = getCarColors();
         clientList = new ArrayList<>();
         serverSocket = new ServerSocket(Message.PORT);
@@ -39,29 +38,29 @@ public class Main {
         setClientsIO();
     }
 
+    //if there are more than 3 clients this function will need to change
     private CarColor[] getCarColors() {
-        // todo if more cars are added this will need to change
         return new CarColor[] {CarColor.RED, CarColor.BLUE, CarColor.YELLOW};
     }
 
     private void setClientsIO() {
-        for (int i = 0; i < clientList.size(); i++) {
-            setClientInfoTransfers(i);
+        for (int clientIndex = 0; clientIndex < clientList.size(); clientIndex++) {
+            setClientsInfoTransfers(clientIndex);
         }
         for (Client client: clientList) {
             client.startInfoTransfers();
         }
     }
 
-    private void setClientInfoTransfers(int clientIndex) {
+    private void setClientsInfoTransfers(int clientIndex) {
         ObjectOutputStream [] outputStreams = new ObjectOutputStream[SUM_OF_CLIENTS - 1];
         ObjectInputStream [] inputStreams = new ObjectInputStream[SUM_OF_CLIENTS - 1];
-        int count = 0;
+        int arrayIndex = 0;
         for (int i = 0; i < SUM_OF_CLIENTS; i++) {
             if(i != clientIndex) {
-                outputStreams[count] = clientList.get(i).getOutputStream();
-                inputStreams[count] = clientList.get(i).getInputStream();
-                count++;
+                outputStreams[arrayIndex] = clientList.get(i).getOutputStream();
+                inputStreams[arrayIndex] = clientList.get(i).getInputStream();
+                arrayIndex++;
             }
         }
         clientList.get(clientIndex).setOtherPlayersInPutStreams(inputStreams);
