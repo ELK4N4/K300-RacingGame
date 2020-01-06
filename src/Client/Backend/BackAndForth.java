@@ -8,14 +8,14 @@ import java.io.ObjectOutputStream;
 
 public class BackAndForth implements  Runnable {
 
-    private Main main;
+    private PlayersDataBase playersDataBase;
     private KeyLogic keyLogic;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean run;
 
-    public BackAndForth(Main main, KeyLogic keyLogic, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
-        this.main = main;
+    public BackAndForth(PlayersDataBase playersDataBase, KeyLogic keyLogic, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+        this.playersDataBase = playersDataBase;
         this.keyLogic = keyLogic;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
@@ -25,18 +25,19 @@ public class BackAndForth implements  Runnable {
     @Override
     public void run() {
         while (run){
-            main.setPlayersPosition(keyLogic.getX(), keyLogic.getY());
-            main.setPlayerDirection(keyLogic.getDirection());
+            playersDataBase.setPlayersInfo(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection());
             try {
-                outputStream.writeObject(new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), main.getPlayersRounds()));
+                System.out.println("sending " + new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
+                outputStream.writeObject(new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
+                System.out.println("sent");
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
+                System.out.println("receiving");
                 Message inputMessage = (Message) inputStream.readObject();
-                main.setEnemyPosition(inputMessage.x, inputMessage.y);
-                main.setEnemyDirection(inputMessage.direction);
-                main.setEnemyRound(inputMessage.round);
+                System.out.println("reading " + inputMessage);
+                playersDataBase.setCarInfo(inputMessage.carColor, inputMessage.x, inputMessage.y, inputMessage.direction);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

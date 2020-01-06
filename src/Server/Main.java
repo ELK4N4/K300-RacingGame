@@ -27,9 +27,12 @@ public class Main {
         serverSocket = new ServerSocket(Message.PORT);
 
         do {
+            System.out.println("waiting for connection num " + clientCount);
             clientSocket = serverSocket.accept();
+            System.out.println("connected");
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            System.out.println(carColors[clientCount].toString());
             objectOutputStream.writeObject(carColors[clientCount].toString());
             clientList.add(new Client(objectInputStream, objectOutputStream, clientCount));
             clientCount++;

@@ -10,12 +10,14 @@ public class Message implements Serializable {
     public double y;
     public double direction;
     public int round;
+    public CarColor carColor;
 
-    public Message(double x, double y, double direction, int round) {
+    public Message(double x, double y, double direction, int round, CarColor carColor) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.round = round;
+        this.carColor = carColor;
     }
 
     @Override
