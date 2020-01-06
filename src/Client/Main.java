@@ -4,6 +4,8 @@ import BackandForth.CarColor;
 import BackandForth.Message;
 import Client.Backend.*;
 import Client.GUI.Window;
+
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
@@ -19,17 +21,21 @@ public class Main {
     private Main() throws IOException, ClassNotFoundException {
         Socket socket;
         // todo if connection fails give single player option
-        socket = new Socket(Message.IP, Message.PORT);
+        //socket = new Socket(Message.IP, Message.PORT);
         DataTransferThread dataTransferThread;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         CarColor playersCarColor;
         keyTranslator = new KeyTranslator(this);
         KeyListener listener = new KeyInput(keyTranslator);
-        inputStream = new ObjectInputStream(socket.getInputStream());
-        outputStream = new ObjectOutputStream(socket.getOutputStream());
-        playersCarColor = CarColor.valueOf(((String) inputStream.readObject()));
-        System.out.println(playersCarColor);
+        //inputStream = new ObjectInputStream(socket.getInputStream());
+        //outputStream = new ObjectOutputStream(socket.getOutputStream());
+        //playersCarColor = CarColor.valueOf(((String) inputStream.readObject()));
+        //System.out.println(playersCarColor);
+        inputStream = null;
+        outputStream = null;
+        playersCarColor = CarColor.YELLOW;
+        // todo fix client
         playersDataBase = new PlayersDataBase(this);
         window = new Window(playersDataBase, listener);
         converter = new Converter(window.getWidth(), window.getHeight());
