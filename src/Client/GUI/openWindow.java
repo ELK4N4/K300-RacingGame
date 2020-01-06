@@ -1,6 +1,6 @@
 package Client.GUI;
 
-import Client.Backend.KeyLogic;
+import Client.Backend.KeyTranslator;
 import Client.Main;
 
 import javax.imageio.ImageIO;
@@ -19,7 +19,7 @@ public class openWindow extends JPanel implements ActionListener{
     private BufferedImage backgroundImg;
     private JButton button;
     private Window window;
-    private KeyLogic keyLogic;
+    private KeyTranslator keyTranslator;
     private Main main;
 
     public openWindow(Main main){

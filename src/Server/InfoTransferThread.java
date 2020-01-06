@@ -29,6 +29,12 @@ public class InfoTransferThread implements Runnable{
 
     void stop() {
         run = false;
+        try {
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

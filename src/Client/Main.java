@@ -11,29 +11,32 @@ import java.net.Socket;
 public class Main {
 
     private PlayersDataBase playersDataBase;
-    private KeyLogic keyLogic;
+    private KeyTranslator keyTranslator;
     private Window window;
+    private Converter converter;
     public static int playersRound;
 
     private Main() throws IOException, ClassNotFoundException {
         Socket socket;
         // todo if connection fails give single player option
         socket = new Socket(Message.IP, Message.PORT);
-        BackAndForth backAndForth;
+        DataTransferThread dataTransferThread;
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         CarColor playersCarColor;
-        keyLogic = new KeyLogic(this);
-        KeyListener listener = new KeyInput(keyLogic);
+        keyTranslator = new KeyTranslator(this);
+        KeyListener listener = new KeyInput(keyTranslator);
         inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         playersCarColor = CarColor.valueOf(((String) inputStream.readObject()));
+        System.out.println(playersCarColor);
         playersDataBase = new PlayersDataBase(this);
         window = new Window(playersDataBase, listener);
+        converter = new Converter(window.getWidth(), window.getHeight());
         playersDataBase.setStartingXY(playersCarColor);
-        new Thread(keyLogic).start();
-        backAndForth = new BackAndForth(playersDataBase, keyLogic, outputStream, inputStream);
-        new Thread(backAndForth).start();
+        new Thread(keyTranslator).start();
+        dataTransferThread = new DataTransferThread(playersDataBase, keyTranslator, outputStream, inputStream);
+        new Thread(dataTransferThread).start();
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -64,6 +67,11 @@ public class Main {
 //    public void addRound() {
 //        playersRound++;
 //    }
+
+    public void setBackendXY(double startingX, double startingY) {
+        keyTranslator.setX(converter.getAxisX(startingX));
+        keyTranslator.setY(converter.getAxisY(startingY));
+    }
 
     public double getWindowWidth() {
         return window.getWidth();

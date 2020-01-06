@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
 
-    private KeyLogic keyLogic;
+    private KeyTranslator keyTranslator;
 
-    public KeyInput(KeyLogic keyLogic) {
-        this.keyLogic = keyLogic;
+    public KeyInput(KeyTranslator keyTranslator) {
+        this.keyTranslator = keyTranslator;
     }
 
     @Override
@@ -22,32 +22,32 @@ public class KeyInput implements KeyListener {
             System.exit(0);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            keyLogic.setRight(true);
+            keyTranslator.setRight(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyLogic.setLeft(true);
+            keyTranslator.setLeft(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyLogic.setUp(true);
+            keyTranslator.setUp(true);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyLogic.setDown(true);
+            keyTranslator.setDown(true);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if(keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            keyLogic.setRight(false);
+            keyTranslator.setRight(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            keyLogic.setLeft(false);
+            keyTranslator.setLeft(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            keyLogic.setUp(false);
+            keyTranslator.setUp(false);
         }
         if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            keyLogic.setDown(false);
+            keyTranslator.setDown(false);
         }
     }
 }

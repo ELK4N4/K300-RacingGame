@@ -2,7 +2,7 @@ package Client.Backend;
 
 import Client.Main;
 
-public class KeyLogic implements Runnable {
+public class KeyTranslator implements Runnable {
 
     private boolean run;
     private double x;
@@ -13,7 +13,7 @@ public class KeyLogic implements Runnable {
     private boolean up, down, right, left;
     private Main main;
 
-    public KeyLogic(Main main) {
+    public KeyTranslator(Main main) {
         run = true;
         up = false;
         down = false;
@@ -22,9 +22,9 @@ public class KeyLogic implements Runnable {
         this.main = main;
     }
 
-    public void setX(double x1){
-        this.x = x1;
-        Cx = x1;
+    public void setX(double x){
+        this.x = x;
+        Cx = x;
     }
 
     public void setY(double y) {

@@ -1,14 +1,14 @@
 package Client.Backend;
 
 import BackandForth.CarColor;
-import Client.GUI.Window;
+import BackandForth.Message;
 import Client.Main;
 
 import java.util.Arrays;
 
 public class PlayersDataBase {
     
-    public static final int SUM_OF_ENEMIES = 1;
+    public static final int SUM_OF_ENEMIES = Message.SUM_OF_PLAYERS - 1;
     private Main main;
     private Car playersCar;
     private Car [] enemyCars;
@@ -22,11 +22,11 @@ public class PlayersDataBase {
     public void setStartingXY(CarColor playersColor) {
         startingX = main.getWindowWidth() / 2.0;
         startingY = main.getWindowHeight() / 2.0 + 300;
+        main.setBackendXY(startingX, startingY);
         setPlayers(playersColor);
     }
 
     private void setPlayers(CarColor playersColor) {
-        // todo add yellow car
         setPlayer(playersColor);
         setEnemies(playersColor);
     }

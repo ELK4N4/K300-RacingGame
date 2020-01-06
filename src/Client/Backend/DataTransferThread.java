@@ -6,17 +6,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class BackAndForth implements  Runnable {
+public class DataTransferThread implements  Runnable {
 
     private PlayersDataBase playersDataBase;
-    private KeyLogic keyLogic;
+    private KeyTranslator keyTranslator;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean run;
 
-    public BackAndForth(PlayersDataBase playersDataBase, KeyLogic keyLogic, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+    public DataTransferThread(PlayersDataBase playersDataBase, KeyTranslator keyTranslator, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
         this.playersDataBase = playersDataBase;
-        this.keyLogic = keyLogic;
+        this.keyTranslator = keyTranslator;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
         run = true;
@@ -24,11 +24,13 @@ public class BackAndForth implements  Runnable {
 
     @Override
     public void run() {
+        Message outputMessage;
         while (run){
-            playersDataBase.setPlayersInfo(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection());
+            playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
             try {
-                System.out.println("sending " + new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
-                outputStream.writeObject(new Message(keyLogic.getX(), keyLogic.getY(), keyLogic.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
+                outputMessage = new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor());
+                System.out.println(outputMessage);
+                outputStream.writeObject(outputMessage);
                 System.out.println("sent");
             } catch (IOException e) {
                 e.printStackTrace();
