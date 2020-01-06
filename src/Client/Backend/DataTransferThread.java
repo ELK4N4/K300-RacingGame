@@ -27,6 +27,7 @@ public class DataTransferThread implements  Runnable {
         Message outputMessage;
         while (run){
             playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
+            System.out.println(keyTranslator.getX() + "," + keyTranslator.getY());
 //            try {
 //                outputMessage = new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor());
 //                System.out.println(outputMessage);

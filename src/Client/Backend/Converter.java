@@ -2,10 +2,10 @@ package Client.Backend;
 
 public class Converter {
 
-    private int width;
-    private int height;
+    private double width;
+    private double height;
 
-    public Converter(int width, int height) {
+    public Converter(double width, double height) {
         this.width = width;
         this.height = height;
     }

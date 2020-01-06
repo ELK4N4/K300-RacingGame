@@ -123,7 +123,6 @@ public class KeyTranslator implements Runnable {
         }
         if(left) {
             direction -= 0.0006;
-
         } else {
             direction += 0.0006;
         }

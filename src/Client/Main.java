@@ -38,7 +38,7 @@ public class Main {
         // todo fix client
         playersDataBase = new PlayersDataBase(this);
         window = new Window(playersDataBase, listener);
-        converter = new Converter(window.getWidth(), window.getHeight());
+        converter = new Converter(getCarWidth(playersCarColor), getCarHeight(playersCarColor));
         playersDataBase.setStartingXY(playersCarColor);
         new Thread(keyTranslator).start();
         dataTransferThread = new DataTransferThread(playersDataBase, keyTranslator, outputStream, inputStream);
@@ -75,8 +75,8 @@ public class Main {
 //    }
 
     public void setBackendXY(double startingX, double startingY) {
-        keyTranslator.setX(converter.getAxisX(startingX));
-        keyTranslator.setY(converter.getAxisY(startingY));
+        keyTranslator.setX(startingX);
+        keyTranslator.setY(startingY);
     }
 
     public double getWindowWidth() {
