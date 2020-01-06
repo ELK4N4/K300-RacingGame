@@ -35,6 +35,7 @@ public class Main {
             clientCount++;
         } while (clientList.size() < SUM_OF_CLIENTS);
 
+        // will need to change to two different outputs and two inputs(if one players is added)
         new Thread(new InfoTransferThread(clientList.get(1).getOutputStream(), clientList.get(0).getInputStream())).start();
         new Thread(new InfoTransferThread(clientList.get(0).getOutputStream(), clientList.get(1).getInputStream())).start();
     }

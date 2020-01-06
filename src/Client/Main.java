@@ -57,42 +57,6 @@ public class Main {
         }
     }
 
-    // not sure if necessary (x won't change without y and vice versa)
-//    public void setPlayersX(double x, double y) {
-//        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
-//            window.setPlayerX(x);
-//        } else {
-//            window.setPlayerX(700);
-//            setPlayersX(700);
-//        }
-//    }
-//
-//    public void setPlayerY(double y, double x) {
-//        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
-//            window.setPlayerY(y);
-//        } else {
-//            window.setPlayerY(700);
-//            setPlayersY(700);
-//        }
-//    }
-//
-//    public void setEnemyX(double x, double y) {
-//        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
-//            window.setEnemyX(x);
-//        } else {
-//            window.setEnemyX(700);
-//        }
-//    }
-//
-//    public void setEnemyY(double y, double x) {
-//        if((x-900) * (x-900) + 3 * ((y-600) * (y-600)) <= 10000000 && (x-900) * (x-900) + 5 * ((y-600) * (y-600)) >= 10000) {
-//            window.setEnemyX(y);
-//        } else {
-//            window.setEnemyX(700);
-//            setPlayersY(700);
-//        }
-//    }
-
     public void setPlayerDirection(double direction) {
         window.setPlayerAngle(direction);
     }

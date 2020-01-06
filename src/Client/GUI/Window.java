@@ -168,7 +168,7 @@ public class Window extends JPanel {
         AffineTransform atBlueCar = AffineTransform.getTranslateInstance(blueCarX, blueCarY);
         AffineTransform atRedCar = AffineTransform.getTranslateInstance(redCarX, redCarY);
         //AffineTransform atYellowCar = AffineTransform.getTranslateInstance(yellowCarX, yellowCarY);
-        g.setFont(new Font("arial", 1, 50));
+        g.setFont(new Font("arial", Font.BOLD, 50));
         g.setColor(Color.red);
 
         atBlueCar.rotate(Math.toDegrees(blueCarAngle), blueCar.getWidth() / 2.0, blueCar.getHeight() / 2.0);

@@ -11,19 +11,18 @@ public class Converter {
     }
 
     public double getAxisX(double x){
-        return x - (width/2.0);
+        return x - (width / 2.0);
     }
 
     public double getAxisY(double y){
-        return  -(y - (height/2.0));
+        return  - (y - (height / 2.0));
     }
 
-    public double getFrameX(double x)
-    {
-        return (double)(width/2 )+x;
+    public double getFrameX(double x) {
+        return (width / 2.0) + x;
     }
-    public double getFrameY(double y)
-    {
-        return (double) (height/2)-y;
+
+    public double getFrameY(double y) {
+        return (height / 2.0) - y;
     }
 }

@@ -1,9 +1,7 @@
 package Client.Backend;
 
-import BackandForth.CarColor;
 import BackandForth.Message;
 import Client.Main;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

@@ -4,6 +4,7 @@ import Client.Main;
 
 public class KeyLogic implements Runnable {
 
+    private boolean run;
     private double x;
     private double y;
     private double Cx;
@@ -13,6 +14,7 @@ public class KeyLogic implements Runnable {
     private Main main;
 
     public KeyLogic(Main main) {
+        run = true;
         up = false;
         down = false;
         right = false;
@@ -32,7 +34,7 @@ public class KeyLogic implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (run) {
             myMove();
             main.refreshWindow();
             try {
@@ -98,16 +100,16 @@ public class KeyLogic implements Runnable {
 
     private void calcXY(int n)   {
         double ty = getY(n + x);
-        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
+        double td = Math.sqrt(Math.pow(-1, 2) + ((y - ty) * (y - ty)));
         x =  (x + (4 / td) * n);
         y = y - (4 / td) *  (y - ty);
     }
 
     private void calcXYDown(int n) {
         double ty = getY(n + x);
-        double td = Math.sqrt(Math.pow(-1, 2) + Math.pow(y - ty, 2));
+        double td = Math.sqrt(Math.pow(-1, 2) + ((y - ty) * (y - ty)));
         x =  (x - (4 / td) * n);
-        y = y - (4 / td) *  (y - ty);
+        y = y - (4 / td) * (y - ty);
     }
 
     private void changeDirection(double x, double y, boolean left) {
@@ -141,6 +143,10 @@ public class KeyLogic implements Runnable {
 
     public void setLeft(boolean left) {
         this.left = left;
+    }
+
+    public void stop() {
+        run = false;
     }
 
 }
