@@ -1,21 +1,71 @@
 package Server;
 
 
+import BackandForth.Message;
+
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-class Client {
+class Client implements Runnable {
 
+    private Server server;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private ObjectInputStream [] otherPlayersInPutStreams;
     private ObjectOutputStream [] otherPlayersOutPutStreams;
-    private int count;
+    private int clientID;
+    private boolean run;
 
-    Client(ObjectInputStream inputStream, ObjectOutputStream outputStream, int count) {
+    Client(Server server, ObjectInputStream inputStream, ObjectOutputStream outputStream, int clientID) {
+        this.server = server;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
-        this.count = count;
+        this.clientID = clientID;
+        run = true;
+    }
+
+    @Override
+    public void run() {
+        while (run) {
+            Message message = getMessage();
+            server.addMessageFromClient(clientID, message);
+            do {
+                if (server.messageIsReadyForClient(clientID)) {
+                    sendMessage();
+                    break;
+                } else {
+                    sleep(5);
+                }
+            } while (true);
+            sleep(10);
+        }
+    }
+
+    Message getMessage() {
+        try {
+            return (Message) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new Error(e.getMessage());
+        }
+    }
+
+    void sendMessage() {
+        try {
+            outputStream.writeObject(server.getMessageForClient(clientID));
+            server.removeOldMessages(clientID);
+
+        } catch (IOException e) {
+            System.out.println("message not sent to client num " + clientID);
+        }
+    }
+
+    void sleep(long sleepDuration) {
+        try {
+            Thread.sleep(sleepDuration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     ObjectInputStream getInputStream() {
@@ -35,10 +85,14 @@ class Client {
     }
 
     void startInfoTransfers() {
-        for (int i = 0; i < Main.SUM_OF_CLIENTS - 1; i++) {
+        for (int i = 0; i < Server.SUM_OF_CLIENTS - 1; i++) {
             new Thread(new InfoTransferThread(outputStream, otherPlayersInPutStreams[i])).start();
             new Thread(new InfoTransferThread(otherPlayersOutPutStreams[i], inputStream)).start();
         }
+    }
+
+    void stop() {
+        run = false;
     }
 
     @Override
@@ -46,7 +100,8 @@ class Client {
         return "Client{\n" +
                 "inputStream=" + inputStream +
                 ", outputStream=" + outputStream +
-                ", count=" + count +
+                ", count=" + clientID +
                 "\n}";
     }
+
 }

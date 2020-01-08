@@ -28,33 +28,45 @@ public class DataTransferThread implements  Runnable {
         new Thread(() -> {
             while (run) {
                 playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
+                sleep(10);
             }
         }).start();
         while (run){
-            try {
-                outputMessage = new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor());
-                System.out.println(outputMessage);
-                outputStream.writeObject(outputMessage);
-                System.out.println("sent");
-            } catch (IOException e) {
-                e.printStackTrace();
+            sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
+            Message[] messages = getMessages();
+            for (Message message : messages) {
+                playersDataBase.setCarInfo(message.carColor, message.x, message.y, message.direction);
             }
-            try {
-                System.out.println("receiving");
-                Object input = inputStream.readObject();
-                if(input instanceof Message) {
-                    Message inputMessage = (Message) input;
-                    System.out.println("reading " + inputMessage);
-                    playersDataBase.setCarInfo(inputMessage.carColor, inputMessage.x, inputMessage.y, inputMessage.direction);
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            sleep(10);
+        }
+    }
+
+    private Message[] getMessages() {
+        try {
+            Object messages = inputStream.readObject();
+            if(messages instanceof Message []) {
+                return (Message[]) inputStream.readObject();
+            } else {
+                throw new Error("wrong message type ");
             }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new Error(e.getMessage());
+        }
+    }
+
+    private void sendMessage(Message message) {
+        try {
+            outputStream.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sleep(long sleepDuration) {
+        try {
+            Thread.sleep(sleepDuration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

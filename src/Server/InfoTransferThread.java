@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class InfoTransferThread implements Runnable{
+public class InfoTransferThread implements Runnable {
 
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
@@ -20,8 +20,10 @@ public class InfoTransferThread implements Runnable{
     public void run() {
         while (run) {
             try {
-                Object message = inputStream.readObject();
-                outputStream.writeObject(message);
+                synchronized (inputStream) {
+                    outputStream.writeObject(inputStream.readObject());
+                }
+
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

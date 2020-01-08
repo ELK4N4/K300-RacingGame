@@ -21,7 +21,7 @@ public class PlayersDataBase {
 
     public void setStartingXY(CarColor playersColor) {
         startingX = main.getWindowWidth() / 2.0;
-        startingY = main.getWindowHeight() / 2.0 + 300;
+        startingY = main.getWindowHeight() / 2.0;
         main.setBackendXY(startingX, startingY);
         setPlayers(playersColor);
     }

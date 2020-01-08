@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-    private static long serialVisionUID = 1L;
-    public static final int SUM_OF_PLAYERS = 2;
+    public static final int SUM_OF_PLAYERS = 3;
     public static final int PORT = 9090;
     public static final String IP = "127.0.0.1";
     public double x;
