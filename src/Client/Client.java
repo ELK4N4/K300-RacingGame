@@ -5,12 +5,11 @@ import BackandForth.Message;
 import Client.Backend.*;
 import Client.GUI.Window;
 
-import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
 
-public class Main {
+public class Client {
 
     private PlayersDataBase playersDataBase;
     private KeyTranslator keyTranslator;
@@ -18,7 +17,7 @@ public class Main {
     private Converter converter;
     public static int playersRound;
 
-    private Main() throws IOException, ClassNotFoundException {
+    private Client() throws IOException, ClassNotFoundException {
         Socket socket;
         // todo if connection fails give single player option
         socket = new Socket(Message.IP, Message.PORT);
@@ -32,10 +31,6 @@ public class Main {
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         playersCarColor = CarColor.valueOf(((String) inputStream.readObject()));
         System.out.println(playersCarColor);
-//        inputStream = null;
-//        outputStream = null;
-//        playersCarColor = CarColor.YELLOW;
-        // todo fix client
         playersDataBase = new PlayersDataBase(this);
         window = new Window(playersDataBase, listener);
         playersDataBase.setStartingXY(playersCarColor);
@@ -46,7 +41,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        new Main();
+        new Client();
     }
 
     public void refreshWindow() {

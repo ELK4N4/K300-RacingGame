@@ -1,7 +1,7 @@
 package Client.GUI;
 
 import Client.Backend.KeyTranslator;
-import Client.Main;
+import Client.Client;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,10 +20,10 @@ public class openWindow extends JPanel implements ActionListener{
     private JButton button;
     private Window window;
     private KeyTranslator keyTranslator;
-    private Main main;
+    private Client client;
 
-    public openWindow(Main main){
-        this.main = main;
+    public openWindow(Client client){
+        this.client = client;
         frame = new JFrame();
         button  = new JButton("Play");
         this.addKeyListener(new KeyListener() {

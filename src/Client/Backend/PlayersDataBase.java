@@ -2,27 +2,27 @@ package Client.Backend;
 
 import BackandForth.CarColor;
 import BackandForth.Message;
-import Client.Main;
+import Client.Client;
 
 import java.util.Arrays;
 
 public class PlayersDataBase {
     
     public static final int SUM_OF_ENEMIES = Message.SUM_OF_PLAYERS - 1;
-    private Main main;
+    private Client client;
     private Car playersCar;
     private Car [] enemyCars;
     private double startingX;
     private double startingY;
     
-    public PlayersDataBase(Main main) {
-        this.main = main;
+    public PlayersDataBase(Client client) {
+        this.client = client;
     }
 
     public void setStartingXY(CarColor playersColor) {
-        startingX = main.getWindowWidth() / 2.0;
-        startingY = main.getWindowHeight() / 2.0;
-        main.setBackendXY(startingX, startingY);
+        startingX = client.getWindowWidth() / 2.0;
+        startingY = client.getWindowHeight() / 2.0;
+        client.setBackendXY(startingX, startingY);
         setPlayers(playersColor);
     }
 
@@ -39,8 +39,8 @@ public class PlayersDataBase {
     private void setPlayersInfo() {
         double x;
         double y;
-        x = startingX + main.getCarWidth(playersCar.getCarColor()) / 2.0;
-        y = startingY + main.getCarHeight(playersCar.getCarColor()) / 2.0;
+        x = startingX + client.getCarWidth(playersCar.getCarColor()) / 2.0;
+        y = startingY + client.getCarHeight(playersCar.getCarColor()) / 2.0;
         setCarInfo(playersCar, x, y, 0);
     }
 
@@ -59,8 +59,8 @@ public class PlayersDataBase {
         double x;
         double y;
         for (int i = 0; i < SUM_OF_ENEMIES; i++) {
-            x = startingX + main.getCarWidth(enemyCars[i].getCarColor()) / 2.0;
-            y = startingY + main.getCarHeight(enemyCars[i].getCarColor()) / 2.0;
+            x = startingX + client.getCarWidth(enemyCars[i].getCarColor()) / 2.0;
+            y = startingY + client.getCarHeight(enemyCars[i].getCarColor()) / 2.0;
             setCarInfo(enemyCars[i], x, y, 0);
         }
     }

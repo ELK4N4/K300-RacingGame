@@ -12,8 +12,6 @@ class Client implements Runnable {
     private Server server;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private ObjectInputStream [] otherPlayersInPutStreams;
-    private ObjectOutputStream [] otherPlayersOutPutStreams;
     private int clientID;
     private boolean run;
 
@@ -65,29 +63,6 @@ class Client implements Runnable {
             Thread.sleep(sleepDuration);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-    }
-
-    ObjectInputStream getInputStream() {
-        return inputStream;
-    }
-
-    ObjectOutputStream getOutputStream () {
-        return outputStream;
-    }
-
-    void setOtherPlayersInPutStreams(ObjectInputStream [] inPutStreams) {
-        otherPlayersInPutStreams = inPutStreams;
-    }
-
-    void setOtherPlayersOutPutStreams(ObjectOutputStream [] outPutStreams) {
-        otherPlayersOutPutStreams = outPutStreams;
-    }
-
-    void startInfoTransfers() {
-        for (int i = 0; i < Server.SUM_OF_CLIENTS - 1; i++) {
-            new Thread(new InfoTransferThread(outputStream, otherPlayersInPutStreams[i])).start();
-            new Thread(new InfoTransferThread(otherPlayersOutPutStreams[i], inputStream)).start();
         }
     }
 

@@ -1,7 +1,7 @@
 package Client.Backend;
 
 import BackandForth.Message;
-import Client.Main;
+import Client.Client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,7 +32,7 @@ public class DataTransferThread implements  Runnable {
             }
         }).start();
         while (run){
-            sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Main.playersRound, playersDataBase.getPlayersCarColor()));
+            sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Client.playersRound, playersDataBase.getPlayersCarColor()));
             Message[] messages = getMessages();
             for (Message message : messages) {
                 playersDataBase.setCarInfo(message.carColor, message.x, message.y, message.direction);
