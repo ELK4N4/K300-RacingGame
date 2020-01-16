@@ -24,7 +24,6 @@ public class DataTransferThread implements  Runnable {
 
     @Override
     public void run() {
-        Message outputMessage;
         new Thread(() -> {
             while (run) {
                 playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
@@ -44,8 +43,8 @@ public class DataTransferThread implements  Runnable {
     private Message[] getMessages() {
         try {
             Object messages = inputStream.readObject();
-            if(messages instanceof Message []) {
-                return (Message[]) inputStream.readObject();
+            if(messages instanceof Message[]) {
+                return (Message[]) messages;
             } else {
                 throw new Error("wrong message type ");
             }

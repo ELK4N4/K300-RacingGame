@@ -6,6 +6,7 @@ import BackandForth.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
 class Client implements Runnable {
 
@@ -27,6 +28,7 @@ class Client implements Runnable {
     public void run() {
         while (run) {
             Message message = getMessage();
+            System.out.println("got " + message);
             server.addMessageFromClient(clientID, message);
             do {
                 if (server.messageIsReadyForClient(clientID)) {
@@ -36,11 +38,12 @@ class Client implements Runnable {
                     sleep(5);
                 }
             } while (true);
+            System.out.println("sent to " + clientID);
             sleep(10);
         }
     }
 
-    Message getMessage() {
+    private Message getMessage() {
         try {
             return (Message) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -48,11 +51,12 @@ class Client implements Runnable {
         }
     }
 
-    void sendMessage() {
+    private void sendMessage() {
         try {
-            outputStream.writeObject(server.getMessageForClient(clientID));
+            Message[] message = server.getMessageForClient(clientID);
+            System.out.println("sending " + Arrays.toString(message));
+            outputStream.writeObject(message);
             server.removeOldMessages(clientID);
-
         } catch (IOException e) {
             System.out.println("message not sent to client num " + clientID);
         }

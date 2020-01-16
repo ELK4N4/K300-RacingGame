@@ -57,6 +57,7 @@ public class Client {
 //            window.setPlayerX(700);
 //            window.setPlayerY(700);
 //            setPlayersX(700);
+
 //            setPlayersY(700);
 //        }
 //    }

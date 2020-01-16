@@ -66,14 +66,18 @@ public class Window extends JPanel {
         double height;
         AffineTransform carAngle;
         g.drawImage(background, 0, 0, this);
+        // player (client)
         try {
             angle = playersDataBase.getPlayersAngle();
+            // todo might not need to dived by 2
             width = getImage(playersDataBase.getPlayersCarColor()).getWidth() / 2.0;
             height = getImage(playersDataBase.getPlayersCarColor()).getHeight() / 2.0;
             carAngle = AffineTransform.getTranslateInstance(playersDataBase.getPlayersXPosition(), playersDataBase.getPlayersYPosition());
             carAngle.rotate(Math.toDegrees(angle), width, height);
             graphics2D.drawImage(getImage(playersDataBase.getPlayersCarColor()), carAngle, null);
         } catch (NullPointerException ignore){}
+        // todo run on different thread
+        // enemies
         for (int i = 0; i < playersDataBase.getEnemiesCarColors().length; i++) {
             angle = playersDataBase.getEnemyAngels()[i];
             width = getImage(playersDataBase.getEnemiesCarColors()[i]).getWidth() / 2.0;
