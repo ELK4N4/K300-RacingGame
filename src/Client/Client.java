@@ -14,7 +14,6 @@ public class Client {
     private PlayersDataBase playersDataBase;
     private KeyTranslator keyTranslator;
     private Window window;
-    private Converter converter;
     public static int playersRound;
 
     private Client() throws IOException, ClassNotFoundException {
@@ -34,7 +33,6 @@ public class Client {
         playersDataBase = new PlayersDataBase(this);
         window = new Window(playersDataBase, listener);
         playersDataBase.setStartingXY(playersCarColor);
-        converter = new Converter(getCarWidth(playersCarColor), getCarHeight(playersCarColor));
         new Thread(keyTranslator).start();
         dataTransferThread = new DataTransferThread(playersDataBase, keyTranslator, outputStream, inputStream);
         new Thread(dataTransferThread).start();
@@ -73,6 +71,8 @@ public class Client {
     public void setBackendXY(double startingX, double startingY) {
         keyTranslator.setX(startingX);
         keyTranslator.setY(startingY);
+        System.out.println("x:" + startingX);
+        System.out.println("y:" + startingY);
     }
 
     public double getWindowWidth() {

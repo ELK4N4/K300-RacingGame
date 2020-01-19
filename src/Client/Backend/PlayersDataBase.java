@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class PlayersDataBase {
     
-    public static final int SUM_OF_ENEMIES = Message.SUM_OF_PLAYERS - 1;
+    static final int SUM_OF_ENEMIES = Message.SUM_OF_PLAYERS - 1;
     private Client client;
     private Car playersCar;
     private Car [] enemyCars;
@@ -20,8 +20,8 @@ public class PlayersDataBase {
     }
 
     public void setStartingXY(CarColor playersColor) {
-        startingX = client.getWindowWidth() / 2.0;
-        startingY = client.getWindowHeight() / 2.0;
+        startingX = 900;
+        startingY = 900;
         setPlayers(playersColor);
     }
 
@@ -38,8 +38,8 @@ public class PlayersDataBase {
     private void setPlayersInfo() {
         double x;
         double y;
-        x = startingX - client.getCarWidth(playersCar.getCarColor()) / 2.0;
-        y = startingY - client.getCarHeight(playersCar.getCarColor()) / 2.0;
+        x = 900;
+        y = 900;
         client.setBackendXY(startingX, startingY);
         setCarInfo(playersCar, x, y, 0);
     }
@@ -138,6 +138,14 @@ public class PlayersDataBase {
             enemyAngels[i] = enemyCars[i].getCarAngle();
         }
         return enemyAngels;
+    }
+
+    public double getStartingX() {
+        return startingX;
+    }
+
+    public double getStartingY() {
+        return startingY;
     }
 
     @Override
