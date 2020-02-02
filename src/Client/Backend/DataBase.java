@@ -3,10 +3,9 @@ package Client.Backend;
 import BackandForth.CarColor;
 import BackandForth.Message;
 import Client.Client;
-
 import java.util.Arrays;
 
-public class PlayersDataBase {
+public class DataBase {
     
     public static final int SUM_OF_ENEMIES = Message.SUM_OF_PLAYERS - 1;
     private Client client;
@@ -15,7 +14,7 @@ public class PlayersDataBase {
     private double startingX;
     private double startingY;
     
-    public PlayersDataBase(Client client) {
+    public DataBase(Client client) {
         this.client = client;
     }
 
@@ -40,7 +39,7 @@ public class PlayersDataBase {
         double y;
         x = startingX - client.getCarWidth(playersCar.getCarColor()) / 2.0;
         y = startingY - client.getCarHeight(playersCar.getCarColor()) / 2.0;
-        client.setBackendXY(startingX, startingY);
+        client.setBackendXY(x, y);
         setCarInfo(playersCar, x, y, 0);
     }
 
@@ -69,10 +68,6 @@ public class PlayersDataBase {
         currentCar.setCarXPosition(x);
         currentCar.setCarYPosition(y);
         currentCar.setCarAngle(angle);
-    }
-
-    public void setPlayersInfo(double x, double y, double angle) {
-        setCarInfo(playersCar, x, y, angle);
     }
 
     public void setCarInfo(CarColor carColor, double x, double y, double angle) {

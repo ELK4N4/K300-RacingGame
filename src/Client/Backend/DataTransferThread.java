@@ -8,14 +8,14 @@ import java.io.ObjectOutputStream;
 
 public class DataTransferThread implements  Runnable {
 
-    private PlayersDataBase playersDataBase;
+    private DataBase dataBase;
     private KeyTranslator keyTranslator;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean run;
 
-    public DataTransferThread(PlayersDataBase playersDataBase, KeyTranslator keyTranslator, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
-        this.playersDataBase = playersDataBase;
+    public DataTransferThread(DataBase dataBase, KeyTranslator keyTranslator, ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+        this.dataBase = dataBase;
         this.keyTranslator = keyTranslator;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
@@ -26,27 +26,26 @@ public class DataTransferThread implements  Runnable {
     public void run() {
         new Thread(() -> {
             while (run) {
-                playersDataBase.setPlayersInfo(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
-                sleep(10);
+                dataBase.setCarInfo(dataBase.getPlayersCarColor(), keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
+                sleep(5);
             }
         }).start();
         while (run){
-            sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Client.playersRound, playersDataBase.getPlayersCarColor()));
-            Message[] messages = getMessages();
-            for (Message message : messages) {
-                playersDataBase.setCarInfo(message.carColor, message.x, message.y, message.direction);
-            }
-            sleep(10);
+            sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Client.playersRound, dataBase.getPlayersCarColor()));
+            Message message = getMessage();
+            dataBase.setCarInfo(message.carColor, message.x, message.y, message.direction);
+            sleep(30);
         }
     }
 
-    private Message[] getMessages() {
+    private Message getMessage() {
         try {
-            Object messages = inputStream.readObject();
-            if(messages instanceof Message[]) {
-                return (Message[]) messages;
+            //todo data not updated
+            Object message = inputStream.readObject();
+            if(message instanceof Message) {
+                return (Message) message;
             } else {
-                throw new Error("wrong message type ");
+                throw new Error("wrong message type");
             }
         } catch (IOException | ClassNotFoundException e) {
             throw new Error(e.getMessage());

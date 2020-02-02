@@ -1,12 +1,8 @@
 package Server;
 
-
-import BackandForth.Message;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 
 class Client implements Runnable {
 
@@ -22,41 +18,37 @@ class Client implements Runnable {
         this.outputStream = outputStream;
         this.clientID = clientID;
         run = true;
+        sendCarColor();
     }
 
     @Override
     public void run() {
         while (run) {
-            Message message = getMessage();
-            System.out.println("got " + message);
-            server.addMessageFromClient(clientID, message);
-            do {
-                if (server.messageIsReadyForClient(clientID)) {
-                    sendMessage();
-                    break;
-                } else {
-                    sleep(5);
-                }
-            } while (true);
-            System.out.println("sent to " + clientID);
+            Object message = getMessage();
+            server.sendMessage(message, clientID);
             sleep(10);
         }
     }
 
-    private Message getMessage() {
+    private void sendCarColor() {
         try {
-            return (Message) inputStream.readObject();
+            outputStream.writeObject(String.valueOf(server.getCarColor(clientID)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object getMessage() {
+        try {
+            return inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new Error(e.getMessage());
         }
     }
 
-    private void sendMessage() {
+    void sendMessage(Object message) {
         try {
-            Message[] message = server.getMessageForClient(clientID);
-            System.out.println("sending " + Arrays.toString(message));
             outputStream.writeObject(message);
-            server.removeOldMessages(clientID);
         } catch (IOException e) {
             System.out.println("message not sent to client num " + clientID);
         }

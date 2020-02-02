@@ -1,53 +1,49 @@
-package Server;
+package Server.Testing2;
 
 import BackandForth.CarColor;
 import BackandForth.Message;
-import Client.Backend.Car;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Server {
 
-    public static final int SUM_OF_CLIENTS = Message.SUM_OF_PLAYERS;
-    private List<Client> clientList;
+    private List<SClient> clients;
+    private final int SUM_OF_CLIENTS = 3;
 
     private Server() throws IOException {
-        int clientCount;
+        int clientCount = 0;
         ServerSocket serverSocket;
         Socket clientSocket;
         ObjectOutputStream objectOutputStream;
         ObjectInputStream objectInputStream;
-        clientCount = 0;
-        clientList = new ArrayList<>();
+        clients = new ArrayList<>();
         serverSocket = new ServerSocket(Message.PORT);
-
+        System.out.println("listening");
         do {
             clientSocket = serverSocket.accept();
+            System.out.println("connected to " + clientCount);
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-            clientList.add(new Client(this, objectInputStream, objectOutputStream, clientCount));
+            clients.add(new SClient(objectInputStream, objectOutputStream, clientCount, this));
             clientCount++;
-        } while (clientList.size() < SUM_OF_CLIENTS);
-        serverSocket.close();
-        runClients();
-    }
+        } while (clientCount < SUM_OF_CLIENTS);
 
-    private void runClients() {
-        for (Client client: clientList) {
+        for (int i = 0; i < SUM_OF_CLIENTS; i++) {
+            clients.get(i).setColor(getCarColors()[i]);
+        }
+
+        for (SClient client: clients) {
             new Thread(client).start();
         }
+
     }
 
-    CarColor getCarColor(int clientID) {
-        return getCarColors()[clientID];
-    }
 
-    // if there are more than 3 clients this function will need to change
     private CarColor[] getCarColors() {
         return new CarColor[] {CarColor.RED, CarColor.BLUE, CarColor.YELLOW};
     }
@@ -56,10 +52,10 @@ public class Server {
         new Server();
     }
 
-    synchronized void sendMessage(Object message, int clientID) {
-        for (int i = 0; i < clientList.size(); i++) {
+    public synchronized void sendMessage(Object message, int clientID) {
+        for (int i = 0; i < SUM_OF_CLIENTS; i++) {
             if(i != clientID) {
-                clientList.get(i).sendMessage(message);
+                clients.get(i).sendMessage(message);
             }
         }
     }

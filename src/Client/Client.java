@@ -11,14 +11,13 @@ import java.net.Socket;
 
 public class Client {
 
-    private PlayersDataBase playersDataBase;
     private KeyTranslator keyTranslator;
     private Window window;
-    private Converter converter;
     public static int playersRound;
 
     private Client() throws IOException, ClassNotFoundException {
         Socket socket;
+        DataBase dataBase;
         // todo if connection fails give single player option
         socket = new Socket(Message.IP, Message.PORT);
         DataTransferThread dataTransferThread;
@@ -31,12 +30,11 @@ public class Client {
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         playersCarColor = CarColor.valueOf(((String) inputStream.readObject()));
         System.out.println(playersCarColor);
-        playersDataBase = new PlayersDataBase(this);
-        window = new Window(playersDataBase, listener);
-        playersDataBase.setStartingXY(playersCarColor);
-        converter = new Converter(getCarWidth(playersCarColor), getCarHeight(playersCarColor));
+        dataBase = new DataBase(this);
+        window = new Window(dataBase, listener);
+        dataBase.setStartingXY(playersCarColor);
         new Thread(keyTranslator).start();
-        dataTransferThread = new DataTransferThread(playersDataBase, keyTranslator, outputStream, inputStream);
+        dataTransferThread = new DataTransferThread(dataBase, keyTranslator, outputStream, inputStream);
         new Thread(dataTransferThread).start();
     }
 
