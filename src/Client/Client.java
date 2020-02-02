@@ -33,7 +33,6 @@ public class Client {
         dataBase = new DataBase(this);
         window = new Window(dataBase, listener);
         dataBase.setStartingXY(playersCarColor);
-        new Thread(keyTranslator).start();
         dataTransferThread = new DataTransferThread(dataBase, keyTranslator, outputStream, inputStream);
         new Thread(dataTransferThread).start();
     }

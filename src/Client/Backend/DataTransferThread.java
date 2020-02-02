@@ -27,14 +27,14 @@ public class DataTransferThread implements  Runnable {
         new Thread(() -> {
             while (run) {
                 dataBase.setCarInfo(dataBase.getPlayersCarColor(), keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection());
-                sleep(5);
+                sleep(10);
             }
         }).start();
         while (run){
             sendMessage(new Message(keyTranslator.getX(), keyTranslator.getY(), keyTranslator.getDirection(), Client.playersRound, dataBase.getPlayersCarColor()));
             Message message = getMessage();
             dataBase.setCarInfo(message.carColor, message.x, message.y, message.direction);
-            sleep(30);
+            sleep(10);
         }
     }
 
@@ -68,7 +68,7 @@ public class DataTransferThread implements  Runnable {
         }
     }
 
-    public void stop(){
+    void stop(){
         run = false;
     }
 

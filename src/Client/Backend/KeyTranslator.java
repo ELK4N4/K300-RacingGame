@@ -2,9 +2,8 @@ package Client.Backend;
 
 import Client.Client;
 
-public class KeyTranslator implements Runnable {
+public class KeyTranslator {
 
-    private boolean run;
     private double x;
     private double y;
     private double Cx;
@@ -14,7 +13,6 @@ public class KeyTranslator implements Runnable {
     private Client client;
 
     public KeyTranslator(Client client) {
-        run = true;
         up = false;
         down = false;
         right = false;
@@ -32,20 +30,12 @@ public class KeyTranslator implements Runnable {
         Cy = y;
     }
 
-    @Override
-    public void run() {
-        while (run) {
-            myMove();
-            client.refreshWindow();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void calculateMove() {
+        move();
+        client.refreshWindow();
     }
 
-    private void myMove() {
+    private void move() {
         if(up) {
             if(right) {
                 changeDirection(x, y, false);
@@ -130,22 +120,22 @@ public class KeyTranslator implements Runnable {
 
     public void setUp(boolean up) {
         this.up = up;
+        calculateMove();
     }
 
     public void setDown(boolean down) {
         this.down = down;
+        calculateMove();
     }
 
     public void setRight(boolean right) {
         this.right = right;
+        calculateMove();
     }
 
     public void setLeft(boolean left) {
         this.left = left;
-    }
-
-    public void stop() {
-        run = false;
+        calculateMove();
     }
 
 }
