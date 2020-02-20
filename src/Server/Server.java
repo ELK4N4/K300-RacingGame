@@ -49,16 +49,16 @@ public class Server {
         return new CarColor[] {CarColor.RED, CarColor.BLUE, CarColor.YELLOW};
     }
 
-    public static void main(String[] args) throws IOException {
-        new Server();
-    }
-
     synchronized void sendMessage(Object message, int clientID) {
         for (int i = 0; i < clientList.size(); i++) {
             if(i != clientID) {
                 clientList.get(i).sendMessage(message);
             }
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        new Server();
     }
 
 }
