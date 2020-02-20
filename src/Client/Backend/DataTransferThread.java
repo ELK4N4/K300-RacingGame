@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class DataTransferThread implements  Runnable {
+public class DataTransferThread implements Runnable {
 
     private DataBase dataBase;
     private KeyTranslator keyTranslator;

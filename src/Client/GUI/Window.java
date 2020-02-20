@@ -2,7 +2,6 @@ package Client.GUI;
 
 import BackandForth.CarColor;
 import Client.Backend.DataBase;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

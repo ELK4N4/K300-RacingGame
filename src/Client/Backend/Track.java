@@ -1,46 +1,75 @@
 package Client.Backend;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
+
 public class Track {
 
-    private double bigA;
-    private double bigB;
-    private double bigC;
+    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final double SCREEN_WIDTH = screenSize.getWidth();
+    private static final double SCREEN_HEIGHT = screenSize.getHeight();
+
+    private double width = SCREEN_WIDTH;
+    private double height = SCREEN_HEIGHT;
+
     private double smallA;
+    private double bigA;
     private double smallB;
-    private double smallC;
-    private int width;
-    private int height;
+    private double bigB;
+    private double positiveSmallC;
+    private double negativeSmallC;
+    private double positiveBigC;
+    private double negativeBigC;
 
-    public Track(double bigA, double bigB,double smallA, double smallB, int width, int height) {
-        Converter converter = new Converter(width, height);
-        this.width = width;
-        this.height = height;
-        this.bigA = converter.getAxisX(this.bigA);
-        System.out.println(this.bigA);
-        this.bigB = converter.getAxisY(this.bigB);
-        this.bigC = getC(this.bigA, this.bigB);
-        this.smallA = converter.getAxisX(this.smallA);
-        this.smallB = converter.getAxisY(this.smallB);
-        this.smallC = getC(this.smallA, this.smallB);
+
+    private Converter converter;
+
+    public Track(int a, int b) {
+        smallA = a / 2;
+        bigA = (a * 1.7) / 2;
+        bigB = (b*1.7) / 2;
+        smallB = b / 2;
+
+        converter = new Converter();
+
+        positiveSmallC = getPositiveC(smallA, smallB);
+        negativeSmallC = getNegativeC(smallA, smallB);
+
+        positiveBigC = getPositiveC(bigA, bigB);
+        negativeBigC = getNegativeC(bigA, bigB);
     }
 
-    private double getC(double a, double b){
-        return Math.sqrt((a * a) - (b * b));
+    private double getDistance(double x1, double x2, double y2) {
+        return Point2D.distance(x1, 0.0, x2, y2);
     }
 
-    private double distance(double x1, double y1, double x2, double y2){
-        return Math.sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+    private double getPositiveC(double a, double b) {
+        return Math.sqrt( (Math.pow(a, 2) - Math.pow(b, 2)) );
     }
 
-    public boolean onTheEllipse(double x, double y){
-        double distanceBig1 = distance(this.smallC, 0, x, y);
-        double distanceBig2 = distance(-this.smallC, 0, x, y);
-        double distanceSmall1 = distance(this.bigC, 0, x, y);
-        double distanceSmall2 = distance(-this.bigC, 0, x, y);
-        System.out.println(distanceBig1 + distanceBig2);
-        System.out.println(bigA);
-        System.out.println(distanceSmall1 + distanceSmall2);
-        System.out.println(smallA);
-        return (distanceBig1 + distanceBig2 < 2 * this.bigA) && (distanceSmall1 + distanceSmall2 > 2 * smallA);
+    private double getNegativeC(double a, double b) {
+        return -( Math.sqrt( (Math.pow(a, 2) - Math.pow(b, 2)) ) );
+    }
+
+    public boolean onTheTrack(double carX, double carY) {
+        double axisX;
+        double axisY;
+        double smallDistance1;
+        double smallDistance2;
+        double bigDistance1;
+        double bigDistance2;
+
+        axisX = converter.getAxisX(carX);
+        axisY = converter.getAxisY(carY);
+
+        smallDistance1 = getDistance(positiveSmallC, axisX, axisY);
+        smallDistance2 = getDistance(negativeSmallC, axisX, axisY);
+
+        bigDistance1 = getDistance(positiveBigC, axisX, axisY);
+        bigDistance2 = getDistance(negativeBigC, axisX, axisY);
+
+        double smallDistance = smallDistance1 + smallDistance2;
+        double bigDistance = bigDistance1 + bigDistance2;
+        return (smallDistance > (2 * smallA) && bigDistance < (2 * bigA));
     }
 }

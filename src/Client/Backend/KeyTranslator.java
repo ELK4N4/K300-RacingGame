@@ -12,6 +12,8 @@ public class KeyTranslator {
     private boolean up, down, right, left;
     private Client client;
 
+    private Track track = new Track(984, 517);
+
     public KeyTranslator(Client client) {
         up = false;
         down = false;
@@ -32,6 +34,10 @@ public class KeyTranslator {
 
     public void calculateMove() {
         move();
+        if(!track.onTheTrack(x, y)) {
+            x = 900;
+            y = 900;
+        }
         client.refreshWindow();
     }
 
