@@ -44,7 +44,7 @@ public class KeyTranslator implements Runnable {
             }
             client.refreshWindow();
             try {
-                Thread.sleep(10);
+                Thread.sleep(9);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -53,12 +53,7 @@ public class KeyTranslator implements Runnable {
 
     private void myMove() {
         if(up) {
-            if(right) {
-                changeDirection(x, y, false);
-            }
-            if(left) {
-                changeDirection(x, y, true);
-            }
+            changeDirection(x, y);
 
             if(direction >= -0.0276 && direction <= 0.0276) {
                 calcXY(1);
@@ -69,12 +64,7 @@ public class KeyTranslator implements Runnable {
 
         }
         if(down) {
-            if(right) {
-                changeDirection(x, y, true);
-            }
-            if(left) {
-                changeDirection(x, y, false);
-            }
+            changeDirection(x, y);
 
             if(direction >= -0.0276 && direction <= 0.0276) {
                 calcXYDown(1);
@@ -118,7 +108,7 @@ public class KeyTranslator implements Runnable {
         y = y - (4 / td) * (y - ty);
     }
 
-    private void changeDirection(double x, double y, boolean left) {
+    private void changeDirection(double x, double y) {
         Cx = x;
         Cy = y;
         if(direction >= 0.0822) {
@@ -129,7 +119,7 @@ public class KeyTranslator implements Runnable {
         }
         if(left) {
             direction -= 0.0006;
-        } else {
+        } else if (right) {
             direction += 0.0006;
         }
     }
