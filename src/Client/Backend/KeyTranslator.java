@@ -5,11 +5,12 @@ import Client.Client;
 public class KeyTranslator implements Runnable {
 
     private boolean run;
-    private double x;
-    private double y;
-    private double Cx;
-    private double Cy;
+    private double currentX;
+    private double currentY;
     private double direction;
+    private double angle = 0;
+    private double carTurnAngle = 4;
+    private double speed = 10;
     private boolean up, down, right, left;
     private Client client;
 
@@ -24,27 +25,25 @@ public class KeyTranslator implements Runnable {
         this.client = client;
     }
 
-    public void setX(double x){
-        this.x = x;
-        Cx = x;
+    public void setCurrentX(double currentX){
+        this.currentX = currentX;
     }
 
-    public void setY(double y) {
-        this.y = y;
-        Cy = y;
+    public void setCurrentY(double currentY) {
+        this.currentY = currentY;
     }
 
     @Override
     public void run() {
         while (run) {
             myMove();
-            if(!track.onTheTrack(x, y)) {
-                x = 900;
-                y = 900;
+            if(!track.onTheTrack(currentX, currentY)) {
+                currentX = 900;
+                currentY = 900;
             }
             client.refreshWindow();
             try {
-                Thread.sleep(9);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -53,64 +52,99 @@ public class KeyTranslator implements Runnable {
 
     private void myMove() {
         if(up) {
-            changeDirection(x, y);
-
-            if(direction >= -0.0276 && direction <= 0.0276) {
-                calcXY(1);
-            } else if(direction >= 0.0276 && direction <= 0.0822) {
-                calcXY(-1);
-            }
-
-
+            changeDirection(currentX, currentY);
+            driveForward();
         }
         if(down) {
-            changeDirection(x, y);
-
-            if(direction >= -0.0276 && direction <= 0.0276) {
-                calcXYDown(1);
-            } else if(direction >= 0.0276 && direction <= 0.0822) {
-                calcXYDown(-1);
-            }
+            changeDirection(currentX, currentY);
+            driveBackward();
         }
-
     }
 
     public  double getDirection() {
         return direction;
     }
 
-    public  double getX() {
-        return x;
+    public double getCurrentX() {
+        return currentX;
     }
 
-    public  double getY() {
-        return y;
+    public double getCurrentY() {
+        return currentY;
     }
 
+    /*
     private double getY(double x) {
         double y;
-        y = Math.tan(Math.toDegrees(direction)) * (x - Cx) ;
-        y = y + Cy;
+        y = Math.tan(Math.toRadians(angle)) * (x); // bug while angle = 0
         return y;
     }
+    */
 
-    private void calcXY(int n)   {
-        double ty = getY(n + x);
-        double td = Math.sqrt(Math.pow(-1, 2) + ((y - ty) * (y - ty)));
-        x =  (x + (4 / td) * n);
-        y = y - (4 / td) *  (y - ty);
+    private void driveForward()   {
+        double newX;
+        double newY;
+        if(angle >= 0 && angle <= 90) {
+            newX = currentX + (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY - Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else if(angle >= 90 && angle <= 180) {
+            newX = currentX - (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY + Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else if(angle >= 180 && angle <= 270) {
+            newX = currentX - (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY + Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else /*if(angle >= 270 && angle <= 360)*/ {
+            newX = currentX + (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY - Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        }
+        currentX = newX;
+        currentX = Math.round(currentX*10000)/10000.0; //5 numbers after the decimal point
+        currentY = newY;
+        currentY = Math.round(currentY*10000)/10000.0; //5 numbers after the decimal point
     }
 
-    private void calcXYDown(int n) {
-        double ty = getY(n + x);
-        double td = Math.sqrt(Math.pow(-1, 2) + ((y - ty) * (y - ty)));
-        x =  (x - (4 / td) * n);
-        y = y - (4 / td) * (y - ty);
+    private void driveBackward() {
+        double newX;
+        double newY;
+        if(angle >= 0 && angle <= 90) {
+            newX = currentX - (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY + Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else if(angle >= 90 && angle <= 180) {
+            newX = currentX + (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY - Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else if(angle >= 180 && angle <= 270) {
+            newX = currentX + (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY - Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        } else /*if(angle >= 270 && angle <= 360)*/ {
+            newX = currentX - (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+            newY = currentY + Math.tan(Math.toRadians(angle)) * (speed / Math.sqrt(1 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle))));
+        }
+        currentX = newX;
+        currentX = Math.round(currentX*10000)/10000.0; //5 numbers after the decimal point
+        currentY = newY;
+        currentY = Math.round(currentY*10000)/10000.0; //5 numbers after the decimal point
     }
 
     private void changeDirection(double x, double y) {
-        Cx = x;
-        Cy = y;
+        if (left) {
+            angle += carTurnAngle;
+            if (angle == 90) {
+                angle += carTurnAngle;
+            }
+        } else if (right) {
+            angle -= carTurnAngle;
+            if (angle == 90) {
+                angle -= carTurnAngle;
+            }
+        }
+        if (angle > 360) {
+            angle = 0;
+        } else if (angle < 0) {
+            angle = 360;
+        }
+        direction = angle;
+        ////////////////////////////
+        /*
         if(direction >= 0.0822) {
             direction = -0.0276;
         }
@@ -118,10 +152,11 @@ public class KeyTranslator implements Runnable {
             direction = 0.0822;
         }
         if(left) {
-            direction -= 0.0006;
+            direction -= 0.0004;
         } else if (right) {
-            direction += 0.0006;
+            direction += 0.0004;
         }
+        */
     }
 
     public void setUp(boolean up) {

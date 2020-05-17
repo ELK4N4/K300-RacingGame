@@ -69,8 +69,8 @@ public class Client {
 //    }
 
     public void setBackendXY(double startingX, double startingY) {
-        keyTranslator.setX(startingX);
-        keyTranslator.setY(startingY);
+        keyTranslator.setCurrentX(startingX);
+        keyTranslator.setCurrentY(startingY);
         System.out.println("x:" + startingX);
         System.out.println("y:" + startingY);
     }

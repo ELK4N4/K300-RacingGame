@@ -76,8 +76,9 @@ public class Window extends JPanel {
             // todo might not need to dived by 2
             width = getImage(playersDataBase.getPlayersCarColor()).getWidth() / 2.0;
             height = getImage(playersDataBase.getPlayersCarColor()).getHeight() / 2.0;
+            System.out.println(playersDataBase.getPlayersXPosition() + "\n" + playersDataBase.getPlayersYPosition() + "\n" + angle);
             carAngle = AffineTransform.getTranslateInstance(playersDataBase.getPlayersXPosition()-width, playersDataBase.getPlayersYPosition()-height);
-            carAngle.rotate(Math.toDegrees(angle), width, height);
+            carAngle.rotate(Math.toRadians(-angle), width, height); //need Minus because Java is multiplier minus
             graphics2D.drawImage(getImage(playersDataBase.getPlayersCarColor()), carAngle, null);
         } catch (NullPointerException ignore){}
         // todo run on different thread
@@ -87,7 +88,7 @@ public class Window extends JPanel {
             width = getImage(playersDataBase.getEnemiesCarColors()[i]).getWidth() / 2.0;
             height = getImage(playersDataBase.getEnemiesCarColors()[i]).getHeight() / 2.0;
             carAngle = AffineTransform.getTranslateInstance(playersDataBase.getEnemyXPositions()[i], playersDataBase.getEnemyYPositions()[i]);
-            carAngle.rotate(Math.toDegrees(angle), width, height);
+            carAngle.rotate(Math.toRadians(-angle), width, height);
             graphics2D.drawImage(getImage(playersDataBase.getEnemiesCarColors()[i]), carAngle, null);
         }
 
@@ -105,10 +106,10 @@ public class Window extends JPanel {
         // Center Location 468, 282
         int carX = (int)playersDataBase.getPlayersXPosition();
         int carY = (int)playersDataBase.getPlayersYPosition();
-
+        /*
         System.out.println("--------------" + carX + "------------------");
         System.out.println("--------------" + carY + "------------------");
-
+        */
 
         g.fillOval(carX-25/2 , carY-25/2, 25, 25);
 
@@ -129,7 +130,7 @@ public class Window extends JPanel {
 
         int distance1 = getDistance(positiveC, 0, axisX, axisY);
         int distance2 = getDistance(negativeC, 0, axisX, axisY);
-
+        /*
         int smallDistance = distance1+distance2;
         System.out.println(smallDistance);
         System.out.println(2*a);
@@ -145,10 +146,17 @@ public class Window extends JPanel {
         } else {
             System.out.println("Not OK");
         }
+        */
 
         Track track = new Track(984, 517);
+        /*
         System.out.println(track.onTheTrack(carX, carY));
+        */
 
+        g.setFont(new Font("TimesRoman", Font.BOLD, 70));
+        g.drawString("Angle: " + Double.toString(this.playersDataBase.getPlayersAngle()), 830, 500);
+        g.drawString("X: " + Double.toString(this.playersDataBase.getPlayersXPosition()), 830, 600);
+        g.drawString("Y: " + Double.toString(this.playersDataBase.getPlayersYPosition()), 830, 700);
     }
 
     public int getDistance(int x1, int y1, int x2, int y2) {
